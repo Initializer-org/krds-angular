@@ -38,6 +38,9 @@ export const classesOf = (el: Element) => [...el.classList].filter(name => !name
 
 /** axe-core 접근성 검사에서 위반이 없는지 확인한다 */
 export async function expectNoA11yViolations(el: Element) {
+  // 전환·등장 효과 중에는 색이 섞여 계산되거나 숨겨진 내용이 빠지므로 끝난 뒤 검사한다 (스피너처럼 무한 반복하는 효과는 기다리지 않음)
+  const finite = el.getAnimations({ subtree: true }).filter(animation => animation.effect?.getComputedTiming().iterations !== Infinity)
+  await Promise.all(finite.map(animation => animation.finished.catch(() => undefined)))
   const { violations } = await axe.run(el)
   expect(violations).toEqual([])
 }

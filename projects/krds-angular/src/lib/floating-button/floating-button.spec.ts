@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
-import { TestBed } from '@angular/core/testing'
-import axe from 'axe-core'
+import { classesOf, expectNoA11yViolations, render } from '../../test/render'
 import { KrdsFloatingButton, type KrdsFloatingButtonItem, type KrdsFloatingButtonSelect } from './floating-button'
 
 const items: KrdsFloatingButtonItem[] = [
@@ -21,20 +20,6 @@ class Host {
   }
 }
 
-async function render(template: string) {
-  TestBed.overrideTemplate(Host, template)
-  const fixture = TestBed.createComponent(Host)
-  await fixture.whenStable()
-  const el = fixture.nativeElement as HTMLElement
-  const host = fixture.componentInstance
-  const $ = <T extends Element = HTMLElement>(selector: string) => el.querySelector(selector) as T
-  const click = async (target: Element) => {
-    ;(target as HTMLElement).click()
-    await fixture.whenStable()
-  }
-  return { fixture, el, host, $, click }
-}
-
 const expandTemplate = `
   <krds-floating-button label="상담 메뉴" [items]="items" (itemSelect)="onSelect($event)" />
   <button class="outside">바깥 버튼</button>
@@ -43,10 +28,11 @@ const expandTemplate = `
 describe('KrdsFloatingButton', () => {
   it('단일형: 아이콘과 레이블을 가진 버튼, 클릭은 기본 click으로 받는다', async () => {
     const { el, host, $, click } = await render(
+      Host,
       '<krds-floating-button label="채팅 상담" icon="ico-faq" class="my-fab" (click)="clicks = clicks + 1" />'
     )
     const root = $('krds-floating-button')
-    expect([...root.classList].sort()).toEqual(['krds-floating-button', 'my-fab'])
+    expect(classesOf(root)).toEqual(['krds-floating-button', 'my-fab'])
     // KRDS 스타일이 테스트 페이지에 들어 있는지 (angular.json의 test-build)
     expect(getComputedStyle(root).position).toBe('fixed')
     const button = $('button.floating-action')
@@ -55,17 +41,17 @@ describe('KrdsFloatingButton', () => {
 
     await click(button)
     expect(host.clicks).toBe(1)
-    expect((await axe.run(el)).violations).toEqual([])
+    await expectNoA11yViolations(el)
   })
 
   it('단일형: hideLabel이면 레이블을 화면에서 숨기고 이름은 유지', async () => {
-    const { $ } = await render('<krds-floating-button label="맨 위로" icon="ico-go-top" hideLabel />')
+    const { $ } = await render(Host, '<krds-floating-button label="맨 위로" icon="ico-go-top" hideLabel />')
     expect($('button .sr-only').textContent).toBe('맨 위로')
     expect($('.floating-label')).toBeNull()
   })
 
   it('단일형: href가 있으면 링크, external이면 새 창 안내', async () => {
-    const { $ } = await render('<krds-floating-button label="채팅 상담" href="https://example.go.kr" external />')
+    const { $ } = await render(Host, '<krds-floating-button label="채팅 상담" href="https://example.go.kr" external />')
     const link = $<HTMLAnchorElement>('a.floating-action')
     expect(link.getAttribute('href')).toBe('https://example.go.kr')
     expect(link.target).toBe('_blank')
@@ -74,7 +60,7 @@ describe('KrdsFloatingButton', () => {
   })
 
   it('확장형: 펼치기·항목 선택 후 닫고 초점을 확장 버튼으로', async () => {
-    const { el, host, $, click } = await render(expandTemplate)
+    const { el, host, $, click } = await render(Host, expandTemplate)
     const root = $('krds-floating-button')
     const toggle = $('.floating-toggle')
     const list = $('.floating-list')
@@ -89,7 +75,7 @@ describe('KrdsFloatingButton', () => {
     expect(list.style.display).toBe('')
     expect($('.floating-dim')).toBeTruthy()
     expect($('a.floating-action').getAttribute('href')).toBe('tel:1555-6365')
-    expect((await axe.run(el)).violations).toEqual([])
+    await expectNoA11yViolations(el)
 
     await click($('button.floating-action'))
     expect(host.selected.map(({ item, index }) => [item, index])).toEqual([[items[0], 0]])
@@ -99,13 +85,13 @@ describe('KrdsFloatingButton', () => {
   })
 
   it('확장형: Esc·가림막 클릭·바깥으로 초점 이동 시 닫힘', async () => {
-    const { fixture, $, click } = await render(expandTemplate)
+    const { $, click, stable } = await render(Host, expandTemplate)
     const toggle = $('.floating-toggle')
 
     await click(toggle)
     toggle.blur() // Safari처럼 클릭해도 초점이 버튼에 가지 않은 상황
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
-    await fixture.whenStable()
+    await stable()
     expect(toggle.getAttribute('aria-expanded')).toBe('false')
     expect(document.activeElement).toBe(toggle)
 
@@ -116,7 +102,7 @@ describe('KrdsFloatingButton', () => {
     await click(toggle)
     toggle.focus()
     $('.outside').focus()
-    await fixture.whenStable()
+    await stable()
     expect(toggle.getAttribute('aria-expanded')).toBe('false')
   })
 
@@ -125,10 +111,13 @@ describe('KrdsFloatingButton', () => {
     ['대상이 없는 해시 라우터 주소', '#/notice', false, true],
     ['핸들러가 이동을 취소', '#pg-target', true, true]
   ])('확장형: 같은 페이지 안 링크 - %s', async (_, href, prevent, keepsFocus) => {
-    const { host, $, click } = await render(`
+    const { host, $, click } = await render(
+      Host,
+      `
       <h2 id="pg-target">대상</h2>
       <krds-floating-button label="상담 메뉴" [items]="[{ label: '본문으로', icon: 'ico-go-top', href: '${href}' }]" (itemSelect)="onSelect($event)" />
-    `)
+    `
+    )
     host.prevent = prevent
     const toggle = $('.floating-toggle')
     await click(toggle)

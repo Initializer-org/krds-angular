@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
-import { userEvent } from 'vitest/browser'
-import { classesOf, expectNoA11yViolations, isVisible, render } from '../../test/render'
+import { classesOf, expectNoA11yViolations, isVisible, render, user } from '../../test/render'
 import { KrdsTooltip } from './tooltip'
 
 // 템플릿은 테스트마다 render()에서 덮어쓴다
@@ -29,18 +28,18 @@ describe('KrdsTooltip', () => {
     await vi.waitFor(() => expect(popover.textContent?.replace(/\s+/g, ' ').trim()).toBe('처리 기간 툴팁의 기본 설정입니다'))
     expect(isVisible(popover)).toBe(false)
 
-    await userEvent.hover(text)
+    await user.hover(text)
     await vi.waitFor(() => expect(isVisible(popover)).toBe(true))
     expect(popover.classList).toContain('active')
     expect(popover.getAttribute('aria-hidden')).toBe('false')
     expect(popover.style.top).not.toBe('')
-    await userEvent.unhover(text)
+    await user.unhover(text)
     await vi.waitFor(() => expect(isVisible(popover)).toBe(false))
 
     icon.focus()
     const iconPopover = document.getElementById(icon.getAttribute('aria-labelledby')!)!
     await vi.waitFor(() => expect(isVisible(iconPopover)).toBe(true))
-    await userEvent.keyboard('{Escape}')
+    await user.keyboard('{Escape}')
     expect(isVisible(iconPopover)).toBe(false)
   })
 
@@ -49,7 +48,7 @@ describe('KrdsTooltip', () => {
     const buttons = $$<HTMLButtonElement>('button')
     expect(buttons[0].classList).toContain('tooltip-vertical')
     expect(buttons[3].classList).toContain('tooltip-box')
-    await userEvent.hover(buttons[0])
+    await user.hover(buttons[0])
     const popover = document.getElementById(buttons[0].getAttribute('aria-labelledby')!)!
     await vi.waitFor(() => expect(popover.classList).toContain('bottom'))
     expect(popover.classList).toContain('tooltip-vertical')
@@ -63,7 +62,7 @@ describe('KrdsTooltip', () => {
 
   it('접근성 위반이 없다', async () => {
     const { el, $$ } = await render(Host, tooltips())
-    await userEvent.hover($$('button')[0])
+    await user.hover($$('button')[0])
     await expectNoA11yViolations(el)
   })
 })

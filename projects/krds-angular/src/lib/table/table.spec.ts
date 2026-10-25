@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core'
-import { userEvent } from 'vitest/browser'
-import { classesOf, expectNoA11yViolations, render } from '../../test/render'
+import { classesOf, expectNoA11yViolations, render, user } from '../../test/render'
 import { KrdsBadge } from '../badge/badge'
 import { KrdsTable, KrdsTableCell, KrdsTableHeader, KrdsTableNoData, type KrdsTableColumn, type KrdsTableRowClick } from './table'
 
@@ -97,8 +96,8 @@ describe('KrdsTable', () => {
     await click(first.children[0])
     await click(second.querySelector('button')!)
     second.focus()
-    await userEvent.keyboard('{Enter}')
-    await userEvent.keyboard(' ')
+    await user.keyboard('{Enter}')
+    await user.keyboard(' ')
     expect(host.clicks.map(({ row, index }) => [row.id, index])).toEqual([
       [1, 0],
       [2, 1],

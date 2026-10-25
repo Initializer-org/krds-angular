@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core'
-import { userEvent } from 'vitest/browser'
-import { expectNoA11yViolations, render } from '../../test/render'
+import { expectNoA11yViolations, render, user } from '../../test/render'
 import { KrdsButton } from '../button/button'
 import { KrdsFloatingButton } from '../floating-button/floating-button'
 import { KrdsModal, KrdsModalFooter } from './modal'
@@ -65,19 +64,19 @@ describe('KrdsModal', () => {
     const close = modal.querySelector('.btn-close')
 
     // 처음 초점(.modal-conts)에서 Shift+Tab이면 마지막(닫기)으로
-    await userEvent.keyboard('{Shift>}{Tab}{/Shift}')
+    await user.keyboard('{Shift>}{Tab}{/Shift}')
     expect(document.activeElement).toBe(close)
     // 마지막에서 Tab이면 처음(아니요)으로
-    await userEvent.keyboard('{Tab}')
+    await user.keyboard('{Tab}')
     expect(document.activeElement).toBe(no)
-    await userEvent.keyboard('{Shift>}{Tab}{/Shift}')
+    await user.keyboard('{Shift>}{Tab}{/Shift}')
     expect(document.activeElement).toBe(close)
   })
 
   it('Esc·배경 클릭으로 닫히고, persistent면 닫히지 않는다', async () => {
     const { host, $, click, stable } = await render(Host, template())
     await click($('.opener'))
-    await userEvent.keyboard('{Escape}')
+    await user.keyboard('{Escape}')
     await stable()
     expect(host.open()).toBe(false)
 
@@ -90,7 +89,7 @@ describe('KrdsModal', () => {
     const { host, $, click, stable } = await render(Host, template('persistent'))
     await click($('.opener'))
     await click(document.querySelector('.modal-back')!)
-    await userEvent.keyboard('{Escape}')
+    await user.keyboard('{Escape}')
     await stable()
     expect(host.open()).toBe(true)
     await click(document.querySelector('.btn-close')!)

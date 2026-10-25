@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
-import { userEvent } from 'vitest/browser'
-import { classesOf, expectNoA11yViolations, isVisible, render } from '../../test/render'
+import { classesOf, expectNoA11yViolations, isVisible, render, user } from '../../test/render'
 import { KrdsContextualHelp } from './contextual-help'
 
 // 템플릿은 테스트마다 render()에서 덮어쓴다
@@ -29,24 +28,24 @@ describe('KrdsContextualHelp', () => {
     expect(document.getElementById(popover.getAttribute('aria-labelledby')!)?.textContent).toBe('도움말 제목')
     expect(isVisible(popover)).toBe(false)
 
-    await userEvent.click(button)
+    await user.click(button)
     expect(button.getAttribute('aria-expanded')).toBe('true')
     expect(isVisible(popover)).toBe(true)
     await vi.waitFor(() => expect(document.activeElement).toBe(popover.querySelector('a')))
     expect(popover.style.width).toBe('360px')
     await expectNoA11yViolations(el)
 
-    await userEvent.click(popover.querySelector('.tooltip-close')!)
+    await user.click(popover.querySelector('.tooltip-close')!)
     expect(button.getAttribute('aria-expanded')).toBe('false')
     expect(document.activeElement).toBe(button)
 
-    await userEvent.click(button)
-    await userEvent.keyboard('{Escape}')
+    await user.click(button)
+    await user.keyboard('{Escape}')
     expect(isVisible(popover)).toBe(false)
     expect(document.activeElement).toBe(button)
 
-    await userEvent.click(button)
-    await userEvent.click($('.outside'))
+    await user.click(button)
+    await user.click($('.outside'))
     expect(button.getAttribute('aria-expanded')).toBe('false')
   })
 
@@ -56,8 +55,8 @@ describe('KrdsContextualHelp', () => {
     expect(classesOf($$('krds-contextual-help')[0])).toEqual(['bottom', 'krds-contextual-help', 'right'])
     expect(first.querySelector('i')?.classList).toContain('ico-help')
     expect(second.querySelector('i')?.classList).toContain('ico-tooltip')
-    await userEvent.click(first)
-    await userEvent.click(second)
+    await user.click(first)
+    await user.click(second)
     expect(first.getAttribute('aria-expanded')).toBe('false')
     expect(second.getAttribute('aria-expanded')).toBe('true')
   })

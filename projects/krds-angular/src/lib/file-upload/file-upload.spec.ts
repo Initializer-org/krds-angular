@@ -26,7 +26,7 @@ const info = (name: string, extra: Partial<KrdsFileInfo> = {}): KrdsFileInfo => 
 async function renderUpload(attrs = '') {
   const result = await render(
     Host,
-    `<krds-file-upload title="증빙 서류" description="PDF 파일" ${attrs}
+    `<krds-file-upload heading="증빙 서류" description="PDF 파일" ${attrs}
        [(files)]="files"
        (fileAdded)="events.push('added:' + $event.name)"
        (fileRemoved)="events.push('removed:' + $event)"
@@ -63,6 +63,8 @@ describe('KrdsFileUpload', () => {
     const { host, $, names, drop } = await renderUpload()
     expect(classesOf($('krds-file-upload'))).toEqual(['krds-file-upload', 'line'])
     expect($('.file-head .tit').textContent).toBe('증빙 서류')
+    // 제목이 기본 title 속성으로 남아 영역 전체에 툴팁이 뜨지 않는다
+    expect($('krds-file-upload').hasAttribute('title')).toBe(false)
     expect($('.file-upload .txt').textContent).toContain('끌어다 놓거나')
 
     expect(await drop([makeFile('신청서.pdf', 2048)])).toBe(true)

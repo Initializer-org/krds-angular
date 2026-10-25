@@ -46,15 +46,15 @@ const extensionOf = (name: string) => {
  * KRDS 파일 업로드. 파일을 끌어다 놓거나 파일선택 버튼으로 고르면 크기·형식·개수를 검사해 목록(`[(files)]`)에 넣는다.
  * 실제 업로드는 사용하는 쪽에서 처리하고, 파일의 status·downloadUrl을 바꿔 넘기면 상태별 버튼을 보여 준다
  *
- * @example <krds-file-upload title="증빙 서류" accept=".pdf,.jpg" [maxFiles]="3" [(files)]="files" />
+ * @example <krds-file-upload heading="증빙 서류" accept=".pdf,.jpg" [maxFiles]="3" [(files)]="files" />
  */
 @Component({
   selector: 'krds-file-upload',
   host: { class: 'krds-file-upload line' },
   template: `
-    @if (title() || description()) {
+    @if (heading() || description()) {
       <div class="file-head">
-        <h3 class="tit">{{ title() }}</h3>
+        <h3 class="tit">{{ heading() }}</h3>
         <div>
           <p>{{ description() }}</p>
         </div>
@@ -149,8 +149,8 @@ const extensionOf = (name: string) => {
 export class KrdsFileUpload {
   /** 파일 목록 */
   readonly files = model<KrdsFileInfo[]>([])
-  /** 제목 */
-  readonly title = input<string>()
+  /** 제목 (기본 title 속성과 겹쳐 툴팁이 뜨지 않게 heading으로 받음) */
+  readonly heading = input<string>()
   /** 설명 */
   readonly description = input<string>()
   /** 끌어다 놓는 영역의 안내 문구 */

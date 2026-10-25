@@ -1,5 +1,6 @@
 import { Component, booleanAttribute, computed, contentChild, input } from '@angular/core'
 import { KRDS_FIELD, KrdsControl, type KrdsField } from '../control/control'
+import { KrdsSpinner } from '../spinner/spinner'
 
 /** 입력 상태 (도움말 문구 색과 입력 필드 테두리) */
 export type KrdsFormGroupState = 'default' | 'error' | 'success' | 'information'
@@ -18,6 +19,7 @@ let nextId = 0
  */
 @Component({
   selector: 'krds-form-group',
+  imports: [KrdsSpinner],
   host: { class: 'form-group' },
   providers: [{ provide: KRDS_FIELD, useExisting: KrdsFormGroup }],
   template: `
@@ -32,7 +34,13 @@ let nextId = 0
       [class]="state() === 'default' ? '' : 'is-' + state()"
       [attr.data-delete]="deleteButton() ? 'true' : null"
     >
-      <ng-content />
+      <!-- 로딩 중이 아니면 묶음 상자를 없애(display: contents) 입력 영역 구조를 그대로 둔다 -->
+      <div [class.form-spinner]="loading()" [style.display]="loading() ? null : 'contents'">
+        <ng-content />
+        @if (loading()) {
+          <krds-spinner />
+        }
+      </div>
     </div>
     @if (hint()) {
       <p [id]="hintId" [class]="hintClass()">{{ hint() }}</p>
@@ -50,6 +58,8 @@ export class KrdsFormGroup implements KrdsField {
   readonly withButton = input(false, { transform: booleanAttribute })
   /** 값이 있을 때만 내용 삭제 버튼(.btn-delete-input)을 보임 */
   readonly deleteButton = input(false, { transform: booleanAttribute })
+  /** 입력 필드 안에 로딩 스피너 표시 (데이터를 불러오거나 검증하는 중) */
+  readonly loading = input(false, { transform: booleanAttribute })
 
   protected readonly control = contentChild(KrdsControl, { descendants: true })
   protected readonly hintId = `krds-form-hint-${nextId++}`

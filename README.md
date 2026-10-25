@@ -39,7 +39,7 @@ Angular `^22.2.0`이 필요합니다.
 - [x] 액션: 링크 `a[krdsLink]`, 버튼 `button[krdsButton]`, 플로팅 버튼 `<krds-floating-button>`
 - [x] 선택: 라디오 버튼 `<krds-radio>`, 체크박스 `<krds-checkbox>`, 셀렉트 `select[krdsSelect]`, 태그 `<krds-tag>`·`a[krdsTag]`, 토글 스위치 `<krds-toggle-switch>`, 묶음 `[krdsCheckArea]`·`[krdsTagGroup]`
 - [x] 입력: 날짜 입력 필드 `<krds-date-input>`, 텍스트 영역 `textarea[krdsInput]`·글자 수 `<krds-textarea>`, 텍스트 입력 필드 `input[krdsInput]`, 파일 업로드 `<krds-file-upload>`, 폼 그룹 `<krds-form-group>` (부가 컴포넌트에서 앞당김)
-- [ ] 피드백: 단계 표시기, 스피너
+- [x] 피드백: 단계 표시기 `ol[krdsStepIndicator]`·`li[krdsStep]`, 스피너 `<krds-spinner>` (입력 필드 로딩은 폼 그룹 `loading`)
 - [ ] 레이아웃 및 표현: 구조화 목록, 긴급 공지, 디스클로저, 모달, 배지, 아코디언, 이미지, 캐러셀, 탭, 표, 텍스트 목록
 - [ ] 탐색: 건너뛰기 링크, 메인 메뉴, 브레드크럼, 사이드 메뉴, 콘텐츠 내 탐색, 페이지네이션
 - [ ] 아이덴티티: 공식 배너, 운영기관 식별자, 헤더, 푸터

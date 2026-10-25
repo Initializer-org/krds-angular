@@ -37,7 +37,7 @@ describe('KrdsFormGroup', () => {
     const hint = $('p')
     expect(classesOf($('krds-form-group'))).toEqual(['form-group'])
     expect($<HTMLLabelElement>('.form-tit > label').htmlFor).toBe(input.id)
-    expect(input.parentElement?.className).toBe('form-conts')
+    expect(input.closest('.form-conts')).toBe($('krds-form-group > .form-conts'))
     expect(classesOf(input)).toEqual(['krds-input', 'large'])
     expect(hint.className).toBe('form-hint')
     expect(input.getAttribute('aria-describedby')).toBe(hint.id)
@@ -108,6 +108,24 @@ describe('KrdsFormGroup', () => {
     typeInto($('input'), '정책')
     await stable()
     expect(getComputedStyle(deleteButton).display).toBe('flex')
+  })
+
+  it('로딩: 입력 필드와 스피너를 form-spinner로 묶고, 아닐 때는 구조를 그대로 둔다', async () => {
+    const { $, $$ } = await render(
+      Host,
+      `
+        <krds-form-group label="주소" hint="불러오는 중입니다" loading><input krdsInput /></krds-form-group>
+        <krds-form-group label="이름"><input krdsInput /></krds-form-group>
+      `
+    )
+    const [loading, idle] = $$('.form-conts > div')
+    expect(loading.className).toBe('form-spinner')
+    expect(loading.querySelector('input + krds-spinner[role="status"]')).toBeTruthy()
+    expect(getComputedStyle(loading.querySelector('.krds-spinner')!).position).toBe('absolute')
+    expect(idle.className).toBe('')
+    expect(getComputedStyle(idle).display).toBe('contents')
+    expect($$('krds-spinner')).toHaveLength(1)
+    expect($('input').getAttribute('aria-describedby')).toBe($('p').id)
   })
 
   it('ngModel이 입력 값을 받는다', async () => {

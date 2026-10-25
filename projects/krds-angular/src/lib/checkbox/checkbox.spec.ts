@@ -8,7 +8,7 @@ import { KrdsCheckArea, KrdsCheckbox, KrdsRadio } from './checkbox'
 // 템플릿은 테스트마다 render()에서 덮어쓴다
 @Component({
   imports: [KrdsCheckbox, KrdsRadio, KrdsCheckArea, KrdsControl, FormsModule, ReactiveFormsModule],
-  template: '<krds-checkbox><input type="checkbox" krdsControl />기본</krds-checkbox>'
+  template: '<div krdsCheckArea><krds-checkbox><input type="checkbox" krdsControl />기본</krds-checkbox></div>'
 })
 class Host {
   agree = false

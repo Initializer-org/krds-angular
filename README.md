@@ -62,7 +62,7 @@ Angular `^22.2.0`이 필요합니다.
 
 ```bash
 pnpm install
-pnpm test     # 단위 테스트와 axe-core 접근성 검사 (Vitest, jsdom)
+pnpm test     # 실제 브라우저(Chromium)에서 단위 테스트와 axe-core 접근성 검사 (처음 한 번 pnpm exec playwright install chromium)
 pnpm build    # dist/krds-angular에 패키지 생성
 pnpm lint
 pnpm format

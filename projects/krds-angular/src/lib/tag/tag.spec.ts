@@ -4,7 +4,7 @@ import axe from 'axe-core'
 import { KrdsTag, KrdsTagGroup } from './tag'
 
 // 템플릿은 테스트마다 render()에서 덮어쓴다
-@Component({ imports: [KrdsTag, KrdsTagGroup], template: '<krds-tag>태그</krds-tag>' })
+@Component({ imports: [KrdsTag, KrdsTagGroup], template: '<div krdsTagGroup><krds-tag>태그</krds-tag></div>' })
 class Host {
   removed: MouseEvent[] = []
 }

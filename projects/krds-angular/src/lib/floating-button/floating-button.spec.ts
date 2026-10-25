@@ -47,6 +47,8 @@ describe('KrdsFloatingButton', () => {
     )
     const root = $('krds-floating-button')
     expect([...root.classList].sort()).toEqual(['krds-floating-button', 'my-fab'])
+    // KRDS 스타일이 테스트 페이지에 들어 있는지 (angular.json의 test-build)
+    expect(getComputedStyle(root).position).toBe('fixed')
     const button = $('button.floating-action')
     expect(button.querySelector('.floating-label')?.textContent).toBe('채팅 상담')
     expect(button.querySelector('i')?.className).toBe('svg-icon ico-faq')

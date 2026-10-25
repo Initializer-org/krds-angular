@@ -30,3 +30,21 @@ export class KrdsLink {
     [this.size(), this.link() && 'link', this.basic() && 'basic', this.pure() && 'pure'].filter(Boolean).join(' ')
   )
 }
+
+/**
+ * 새 창 링크. target·rel과 '새 창 열림' 안내(title)를 붙인다 (`[krdsExternal]="false"`면 붙이지 않음)
+ *
+ * @example <a href="https://www.gov.kr" krdsExternal>정부24</a>
+ */
+@Directive({
+  selector: 'a[krdsExternal]',
+  host: {
+    '[attr.target]': "krdsExternal() ? '_blank' : null",
+    '[attr.rel]': "krdsExternal() ? 'noopener noreferrer' : null",
+    '[attr.title]': "krdsExternal() ? '새 창 열림' : null"
+  }
+})
+export class KrdsExternalLink {
+  /** 새 창으로 열기 */
+  readonly krdsExternal = input(true, { transform: booleanAttribute })
+}

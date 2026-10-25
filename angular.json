@@ -1,0 +1,36 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "cli": {
+    "packageManager": "pnpm"
+  },
+  "newProjectRoot": "projects",
+  "projects": {
+    "krds-angular": {
+      "projectType": "library",
+      "root": "projects/krds-angular",
+      "sourceRoot": "projects/krds-angular/src",
+      "prefix": "krds",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/krds-angular/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/krds-angular/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/krds-angular/tsconfig.spec.json"
+          }
+        }
+      }
+    }
+  }
+}

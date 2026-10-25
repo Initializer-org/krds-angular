@@ -1,0 +1,383 @@
+@use '../common/include' as *;
+
+/* ** swiper ** */
+
+//모드 설정
+$mode-setting: light;
+.swiper-indicator {
+  @include flex-layout($jc: flex-end, $ai: center);
+  gap: var(--krds-gap-3);
+  flex-shrink: 0;
+  position: relative;
+  &.text-center {
+    justify-content: center;
+  }
+  .swiper-pagination {
+    top: auto;
+    bottom: auto;
+    width: auto;
+    &:not(.swiper-pagination-fraction) {
+      @include flex-layout($jc: center, $ai: center);
+      height: var(--krds-size-height-6);
+      padding: var(--krds-padding-5);
+      border-radius: var(--krds-radius-max);
+      background-color: var(--krds-#{$mode-setting}-color-element-inverse);
+    }
+    &.swiper-pagination-fraction {
+      &.swiper-pagination-bg {
+        font-weight: var(--krds-font-weight-bold);
+        padding: var(--krds-padding-5);
+        border-radius: var(--krds-radius-max);
+        background-color: var(--krds-#{$mode-setting}-color-surface-white);
+      }
+    }
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    @include position(relative, auto, auto, auto, auto);
+    margin: 0;
+  }
+  .swiper-navigation {
+    display: inline-flex;
+    gap: var(--krds-gap-3);
+  }
+}
+
+.swiper-pagination {
+  @include flex-layout($jc: center, $ai: center);
+  position: relative;
+  height: var(--krds-size-height-6);
+  .swiper-pagination-bullet {
+    // swiper-bundle.min.css가 제공하던 불릿 기본값 폴리필 — 라이브러리는 Swiper CSS를 포함하지 않는다
+    margin: 0 0.4rem;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    @include square(var(--krds-size-height-1));
+    background-color: var(--krds-#{$mode-setting}-color-element-gray);
+    opacity: 1;
+    &.swiper-pagination-bullet-active {
+      width: 2rem;
+      border-radius: var(--krds-radius-max);
+      background-color: var(--krds-#{$mode-setting}-color-element-primary);
+    }
+  }
+  &.swiper-pagination-fraction {
+    gap: var(--krds-gap-2);
+    padding: 0 var(--krds-padding-6);
+    color: var(--krds-#{$mode-setting}-color-text-basic);
+    font-weight: var(--krds-font-weight-bold);
+    border: var(--krds-#{$mode-setting}-border-width-variable-regular) solid var(--krds-#{$mode-setting}-color-border-gray-light);
+    border-radius: var(--krds-radius-max);
+    background-color: var(--krds-#{$mode-setting}-color-surface-white);
+    .swiper-pagination-current {
+      color: var(--krds-#{$mode-setting}-color-text-secondary);
+    }
+  }
+}
+
+.swiper-controller {
+  @include flex-layout($jc: center, $ai: center);
+  gap: var(--krds-gap-3);
+}
+
+[class^='swiper-button-'] {
+  @include flex-layout($jc: center, $ai: center);
+  @include square(var(--krds-size-height-6));
+  flex-shrink: 0;
+  border-radius: var(--krds-radius-max);
+  border: var(--krds-#{$mode-setting}-border-width-variable-regular) solid var(--krds-#{$mode-setting}-color-border-gray-light);
+  background-color: var(--krds-#{$mode-setting}-color-action-white);
+  &::after {
+    @include pseudo();
+    @include svg-icon();
+    font-size: 0 !important;
+  }
+  &:hover {
+    background-color: var(--krds-#{$mode-setting}-color-action-secondary-hover);
+  }
+}
+
+.swiper-button-more {
+  &::after {
+    @include icon-set(ico_plus);
+  }
+}
+
+.swiper-button-play {
+  &::after {
+    @include icon-set(ico_swiper_play);
+  }
+}
+
+.swiper-button-stop {
+  &::after {
+    @include icon-set(ico_swiper_stop);
+  }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  &::after {
+    @include icon-set(ico_angle);
+  }
+  &:hover {
+    background-color: var(--krds-#{$mode-setting}-color-action-secondary-hover);
+  }
+  &:active {
+    background-color: var(--krds-#{$mode-setting}-color-action-secondary-pressed);
+  }
+  &.swiper-button-disabled {
+    background-color: var(--krds-#{$mode-setting}-color-action-disabled);
+    opacity: 1;
+    &::after {
+      background-color: var(--krds-#{$mode-setting}-color-icon-disabled-on);
+    }
+  }
+}
+.swiper-button-next {
+  right: 0;
+  &::after {
+    transform: rotate(-90deg);
+  }
+}
+.swiper-button-prev {
+  left: 0;
+  &::after {
+    transform: rotate(90deg);
+  }
+}
+
+/* ** 배너 레이아웃 ** */
+// 원본 저장소에는 배너 레이아웃 SCSS가 없다(carousel.html이 참조하는 스타일은 krds.go.kr 사이트 전용 CSS에만 존재).
+// krds.go.kr resources/css/site/output.css의 .main-vban-wrap .vb-swiper / .main-sect .main-d-ban-swiper
+// 규칙을 컴포넌트 루트(.krds-carousel) 스코프로 옮겨왔다.
+
+// 비주얼 배너형 (carousel.html)
+.krds-carousel.vb-swiper {
+  padding: 0 10.2rem;
+  .swiper-slide {
+    height: 48.8rem;
+    .in {
+      @include flex-layout($jc: center);
+      padding-top: 13rem;
+      gap: var(--krds-gap-11);
+      height: 100%;
+      background-position: center right;
+      background-repeat: no-repeat;
+    }
+    .text {
+      @include flex-layout($fd: column);
+      flex: 1;
+      padding-top: 1.75rem;
+      gap: var(--krds-pc-gap-layout-title-body-large);
+      font-weight: var(--krds-font-weight-bold);
+      .tit {
+        font-size: var(--krds-pc-font-size-display-small);
+        letter-spacing: var(--krds-typo-letter-spacing-1);
+      }
+      .txt {
+        font-size: var(--krds-pc-font-size-body-large);
+        font-weight: var(--krds-font-weight-regular);
+      }
+      .krds-btn {
+        margin-top: var(--krds-gap-5);
+      }
+    }
+    .im {
+      flex-basis: 35%;
+      flex-shrink: 0;
+      margin-right: auto;
+      text-align: right;
+      img {
+        width: 100%;
+        max-width: 34rem;
+      }
+      svg {
+        width: 100%;
+        height: fit-content;
+      }
+    }
+    .krds-btn:focus {
+      box-shadow: var(--krds-box-shadow-outline-inset);
+      outline-offset: -0.4rem;
+    }
+  }
+  .swiper-indicator {
+    padding-bottom: var(--krds-padding-9);
+  }
+  @include size-medium-more {
+    .swiper-button-prev,
+    .swiper-button-next {
+      @include square(var(--krds-size-height-9));
+      &::after {
+        width: 3.8rem;
+        height: 3.8rem;
+      }
+    }
+  }
+  @include size-large-less {
+    padding: var(--krds-padding-10) 0;
+    .swiper-slide {
+      height: auto;
+      padding: 0 var(--krds-padding-8);
+      .in {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: normal;
+        padding-top: 0;
+        gap: var(--krds-gap-9);
+      }
+      .text {
+        padding-top: 0;
+        gap: var(--krds-mobile-gap-layout-title-body-large);
+        .tit {
+          font-size: var(--krds-mobile-font-size-heading-large);
+        }
+        .txt {
+          font-size: var(--krds-mobile-font-size-body-large);
+        }
+        .krds-btn {
+          margin-top: var(--krds-gap-2);
+        }
+      }
+      .im {
+        width: 100%;
+        text-align: right;
+        img {
+          height: 20.2rem;
+        }
+      }
+    }
+    .swiper-button-prev,
+    .swiper-button-next {
+      display: none;
+    }
+    .swiper-indicator {
+      margin-top: var(--krds-gap-4);
+      padding: 0;
+    }
+  }
+}
+
+// 배너형 (carousel_banner.html)
+.krds-carousel.main-d-ban-swiper {
+  @include flex-layout($ai: normal, $fd: column);
+  z-index: 1;
+  text-align: center;
+  .swiper {
+    width: 100%;
+  }
+  .swiper-indicator {
+    justify-content: center;
+    margin-top: var(--krds-gap-6);
+  }
+  .text {
+    @include flex-layout($ai: center, $fd: column);
+    gap: var(--krds-gap-3);
+    margin-bottom: var(--krds-gap-6);
+    font-weight: var(--krds-font-weight-bold);
+    .cate {
+      font-size: var(--krds-pc-font-size-heading-xxsmall);
+    }
+    .tit {
+      font-size: var(--krds-pc-font-size-heading-medium);
+    }
+  }
+  .im {
+    text-align: center;
+  }
+  &.align-start .text {
+    align-items: flex-start;
+  }
+  @include size-large-less {
+    .text {
+      .tit {
+        font-size: var(--krds-mobile-font-size-heading-medium);
+      }
+    }
+  }
+}
+
+//고대비모드
+@include color-mode(high-contrast) {
+  //모드 설정
+  $mode-setting: high-contrast;
+  .swiper-indicator {
+    .swiper-pagination {
+      &:not(.swiper-pagination-fraction) {
+        background-color: var(--krds-#{$mode-setting}-color-element-inverse);
+      }
+      &.swiper-pagination-fraction {
+        &.swiper-pagination-bg {
+          background-color: var(--krds-#{$mode-setting}-color-surface-white);
+        }
+      }
+    }
+  }
+
+  .swiper-pagination {
+    .swiper-pagination-bullet {
+      background-color: var(--krds-#{$mode-setting}-color-element-gray);
+      &.swiper-pagination-bullet-active {
+        background-color: var(--krds-#{$mode-setting}-color-element-primary);
+      }
+    }
+    &.swiper-pagination-fraction {
+      color: var(--krds-#{$mode-setting}-color-text-basic);
+      border-width: var(--krds-#{$mode-setting}-border-width-variable-regular);
+      border-color: var(--krds-#{$mode-setting}-color-border-gray-light);
+      background-color: var(--krds-#{$mode-setting}-color-surface-white);
+      .swiper-pagination-current {
+        color: var(--krds-#{$mode-setting}-color-text-secondary);
+      }
+    }
+  }
+
+  [class^='swiper-button-'] {
+    border-width: var(--krds-#{$mode-setting}-border-width-variable-regular);
+    border-color: var(--krds-#{$mode-setting}-color-border-gray-light);
+    background-color: var(--krds-#{$mode-setting}-color-action-white);
+    &::after {
+      background-color: var(--krds-#{$mode-setting}-color-text-basic);
+    }
+    &:hover {
+      background-color: var(--krds-#{$mode-setting}-color-action-secondary-hover);
+    }
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    &:hover {
+      background-color: var(--krds-#{$mode-setting}-color-action-secondary-hover);
+    }
+    &:active {
+      background-color: var(--krds-#{$mode-setting}-color-action-secondary-pressed);
+    }
+    &.swiper-button-disabled {
+      background-color: var(--krds-#{$mode-setting}-color-action-disabled);
+      &::after {
+        background-color: var(--krds-#{$mode-setting}-color-icon-disabled-on);
+      }
+    }
+  }
+
+  .krds-carousel.vb-swiper .swiper-slide .text {
+    color: var(--krds-#{$mode-setting}-color-text-static);
+  }
+}
+
+//모바일 전용 속성
+@include size-medium {
+  .swiper-indicator {
+    &.w-hide {
+      display: flex !important;
+    }
+    .swiper-navigation {
+      &.w-hide {
+        display: flex !important;
+      }
+    }
+  }
+}

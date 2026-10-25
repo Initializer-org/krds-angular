@@ -1,0 +1,53 @@
+//only component
+
+//공통
+@use '../common/include' as *;
+
+//component
+@use 'button';
+@use 'floating_button';
+@use 'toast';
+@use 'snackbar';
+@use 'tab';
+@use 'tab_bar';
+@use 'table';
+@use 'text_list';
+@use 'image';
+@use 'media';
+@use 'modal';
+@use 'help_panel';
+@use 'accordion';
+@use 'spinner';
+@use 'contextual_help';
+@use 'tooltip';
+@use 'file_upload';
+@use 'coach_mark';
+@use 'disclosure';
+@use 'skip_link';
+@use 'masthead';
+@use 'header';
+@use 'main_menu';
+@use 'footer';
+@use 'identifier';
+@use 'side_navigation';
+@use 'structured_list';
+@use 'critical_alerts';
+@use 'in_page_navigation';
+@use 'carousel';
+@use 'pagination';
+@use 'breadcrumb';
+@use 'step_indicator';
+@use 'badge';
+@use 'tag';
+@use 'form_layout';
+@use 'input';
+@use 'select';
+@use 'form_check';
+@use 'form_chip';
+@use 'switch';
+@use 'quantity_toggle';
+@use 'range_slider';
+@use 'calendar';
+@use 'resize';
+@use 'language_switcher';
+@use 'tts';

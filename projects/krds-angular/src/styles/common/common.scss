@@ -1,0 +1,17 @@
+//공통
+
+@use 'path' as *;
+@use 'tokens';
+@use 'include' as *;
+@use '../../assets/fonts/fonts';
+@use 'root';
+@use 'icon';
+
+@use 'dropdown';
+
+@use 'reset';
+
+@use 'utilities';
+
+// FIXME 컴포넌트 상으로는 없음
+@use 'site';

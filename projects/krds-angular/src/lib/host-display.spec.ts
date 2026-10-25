@@ -15,10 +15,14 @@ import { KrdsFormGroup } from './form-group/form-group'
 import { KrdsInPageNavigation } from './in-page-navigation/in-page-navigation'
 import { KrdsInput } from './input/input'
 import { KrdsPanel } from './panel/panel'
+import { KrdsQuantityToggle } from './quantity-toggle/quantity-toggle'
+import { KrdsRangeSlider } from './range-slider/range-slider'
+import { KrdsSnackbar } from './snackbar/snackbar'
 import { KrdsSpinner } from './spinner/spinner'
 import { KrdsTable } from './table/table'
 import { KrdsTabs } from './tabs/tabs'
 import { KrdsTextarea } from './textarea/textarea'
+import { KrdsToast } from './toast/toast'
 import { KrdsToggleSwitch } from './toggle-switch/toggle-switch'
 import { KrdsTooltip } from './tooltip/tooltip'
 
@@ -33,6 +37,10 @@ import { KrdsTooltip } from './tooltip/tooltip'
     KrdsCoachMark,
     KrdsContextualHelp,
     KrdsPanel,
+    KrdsQuantityToggle,
+    KrdsRangeSlider,
+    KrdsSnackbar,
+    KrdsToast,
     KrdsTooltip,
     KrdsControl,
     KrdsCriticalAlerts,
@@ -78,6 +86,10 @@ describe('컴포넌트 요소의 display', () => {
         <krds-contextual-help heading="a">a</krds-contextual-help>
         <krds-coach-mark [steps]="[]" [step]="1" />
         <krds-tooltip content="a">a</krds-tooltip>
+        <krds-range-slider label="a" />
+        <krds-quantity-toggle label="a" />
+        <krds-toast />
+        <krds-snackbar />
       `
     )
     const inline = [...el.querySelectorAll('*')]

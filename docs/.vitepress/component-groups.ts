@@ -110,7 +110,11 @@ export const componentGroups: { text: string; pages: [name: string, slug: string
   },
   {
     text: '부가 컴포넌트',
-    pages: [['폼 그룹 Form group', 'form-group']]
+    pages: [
+      ['폼 그룹 Form group', 'form-group'],
+      ['아이콘 Icon', 'icon'],
+      ['레이아웃 Layout', 'layout']
+    ]
   }
 ]
 

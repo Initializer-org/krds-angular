@@ -371,7 +371,8 @@ let nextId = 0
                                           </button>
                                         </div>
                                         <div class="depth4-body">
-                                          <h4 class="sub-title">{{ link.panelTitle || link.text }}</h4>
+                                          <!-- 2단계 패널 제목(h2) 바로 아래 수준 (KRDS 원본은 h4라 h3을 건너뜀) -->
+                                          <h3 class="sub-title">{{ link.panelTitle || link.text }}</h3>
                                           <ul class="depth4-ul">
                                             @for (depth4 of link.items; track $index) {
                                               <li>

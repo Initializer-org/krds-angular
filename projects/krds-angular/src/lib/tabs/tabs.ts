@@ -26,7 +26,8 @@ let nextId = 0
 
 /**
  * KRDS 탭. 탭 목록은 `tabs`로, 패널 내용은 탭 id별 `<ng-template krdsTabPanel>`으로 넣는다.
- * 선택한 탭 id는 `[(selected)]`로 주고받고(없으면 첫 활성 탭), 방향키(←·→)로 탭 사이 초점을 옮긴다
+ * 선택한 탭 id는 `[(selected)]`로 주고받고(없으면 첫 활성 탭), 방향키(←·→)로 탭 사이 초점을 옮긴다.
+ * 방향키는 비활성 탭을 건너뛰고 끝에서 처음으로 돌아가며, Home·End는 첫·마지막 탭으로 간다 (WAI-ARIA 탭 패턴)
  *
  * @example
  * <krds-tabs [tabs]="[{ id: 'notice', label: '공지' }, { id: 'faq', label: '자주 묻는 질문' }]" [(selected)]="tab">
@@ -113,10 +114,12 @@ export class KrdsTabs {
   }
 
   protected onKeydown(event: KeyboardEvent) {
-    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return
+    const tab = event.currentTarget as HTMLButtonElement
+    const tabs = [...tab.closest('[role="tablist"]')!.querySelectorAll<HTMLButtonElement>('[role="tab"]:not(:disabled)')]
+    const index = tabs.indexOf(tab)
+    const next = { ArrowRight: index + 1, ArrowLeft: index - 1, Home: 0, End: tabs.length - 1 }[event.key]
+    if (next === undefined) return
     event.preventDefault()
-    const item = (event.currentTarget as HTMLElement).parentElement
-    const sibling = event.key === 'ArrowRight' ? item?.nextElementSibling : item?.previousElementSibling
-    sibling?.querySelector('button')?.focus()
+    tabs[(next + tabs.length) % tabs.length].focus()
   }
 }

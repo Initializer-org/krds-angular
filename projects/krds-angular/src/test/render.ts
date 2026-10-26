@@ -36,3 +36,9 @@ export async function expectNoA11yViolations(el: Element) {
   const { violations } = await axe.run(el)
   expect(violations).toEqual([])
 }
+
+/** 화면에 보이는지 (display·visibility까지 확인) */
+export const isVisible = (el: Element | null | undefined) => !!el?.checkVisibility({ visibilityProperty: true })
+
+/** aria-controls로 연결된 요소 */
+export const controlledBy = (el: Element) => document.getElementById(el.getAttribute('aria-controls') ?? '')

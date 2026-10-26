@@ -41,7 +41,7 @@ Angular `^22.2.0`이 필요합니다.
 - [x] 입력: 날짜 입력 필드 `<krds-date-input>`, 텍스트 영역 `textarea[krdsInput]`·글자 수 `<krds-textarea>`, 텍스트 입력 필드 `input[krdsInput]`, 파일 업로드 `<krds-file-upload>`, 폼 그룹 `<krds-form-group>` (부가 컴포넌트에서 앞당김)
 - [x] 피드백: 단계 표시기 `ol[krdsStepIndicator]`·`li[krdsStep]`, 스피너 `<krds-spinner>` (입력 필드 로딩은 폼 그룹 `loading`)
 - [x] 레이아웃 및 표현: 구조화 목록 `ul[krdsStructuredList]`, 긴급 공지 `<krds-critical-alerts>`, 디스클로저 `<krds-disclosure>`, 모달 `<krds-modal>`, 배지 `[krdsBadge]`, 아코디언 `[krdsAccordion]`·`<krds-accordion-item>`, 이미지 `img[krdsImage]`·`figure[krdsFigure]`, 캐러셀 `<krds-carousel>`·`li[krdsSlide]`, 탭 `<krds-tabs>`, 표 `<krds-table>`, 텍스트 목록 `[krdsTextList]`
-- [ ] 탐색: 건너뛰기 링크, 메인 메뉴, 브레드크럼, 사이드 메뉴, 콘텐츠 내 탐색, 페이지네이션
+- [x] 탐색: 건너뛰기 링크 `[krdsSkipLink]`, 메인 메뉴 `<krds-main-menu>`(PC·모바일), 브레드크럼 `nav[krdsBreadcrumb]`, 사이드 메뉴 `nav[krdsSideNavigation]`, 콘텐츠 내 탐색 `<krds-in-page-navigation>`, 페이지네이션 `nav[krdsPagination]`, 새 창 링크 `a[krdsExternal]`
 - [ ] 아이덴티티: 공식 배너, 운영기관 식별자, 헤더, 푸터
 - [ ] 도움: 패널, 맥락적 도움말, 코치마크, 툴팁, 음성 지원
 - [ ] 설정: 언어 변경, 화면 크기 조정

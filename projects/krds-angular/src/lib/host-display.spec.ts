@@ -3,6 +3,8 @@ import { render } from '../test/render'
 import { KrdsAccordion, KrdsAccordionItem } from './accordion/accordion'
 import { KrdsCarousel, KrdsSlide } from './carousel/carousel'
 import { KrdsCheckbox, KrdsRadio } from './checkbox/checkbox'
+import { KrdsCoachMark } from './coach-mark/coach-mark'
+import { KrdsContextualHelp } from './contextual-help/contextual-help'
 import { KrdsControl } from './control/control'
 import { KrdsCriticalAlerts } from './critical-alerts/critical-alerts'
 import { KrdsDateInput } from './date-input/date-input'
@@ -12,11 +14,13 @@ import { KrdsFloatingButton } from './floating-button/floating-button'
 import { KrdsFormGroup } from './form-group/form-group'
 import { KrdsInPageNavigation } from './in-page-navigation/in-page-navigation'
 import { KrdsInput } from './input/input'
+import { KrdsPanel } from './panel/panel'
 import { KrdsSpinner } from './spinner/spinner'
 import { KrdsTable } from './table/table'
 import { KrdsTabs } from './tabs/tabs'
 import { KrdsTextarea } from './textarea/textarea'
 import { KrdsToggleSwitch } from './toggle-switch/toggle-switch'
+import { KrdsTooltip } from './tooltip/tooltip'
 
 @Component({
   imports: [
@@ -26,6 +30,10 @@ import { KrdsToggleSwitch } from './toggle-switch/toggle-switch'
     KrdsSlide,
     KrdsCheckbox,
     KrdsRadio,
+    KrdsCoachMark,
+    KrdsContextualHelp,
+    KrdsPanel,
+    KrdsTooltip,
     KrdsControl,
     KrdsCriticalAlerts,
     KrdsDateInput,
@@ -66,6 +74,10 @@ describe('컴포넌트 요소의 display', () => {
         <krds-carousel><li krdsSlide>a</li></krds-carousel>
         <krds-in-page-navigation />
         <krds-critical-alerts message="a" />
+        <krds-panel />
+        <krds-contextual-help heading="a">a</krds-contextual-help>
+        <krds-coach-mark [steps]="[]" [step]="1" />
+        <krds-tooltip content="a">a</krds-tooltip>
       `
     )
     const inline = [...el.querySelectorAll('*')]

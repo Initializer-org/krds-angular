@@ -54,10 +54,15 @@ const extensionOf = (name: string) => {
   template: `
     @if (heading() || description()) {
       <div class="file-head">
-        <h3 class="tit">{{ heading() }}</h3>
-        <div>
-          <p>{{ description() }}</p>
-        </div>
+        <!-- 제목 없이 설명만 주면 빈 제목(h3)을 그리지 않는다 -->
+        @if (heading()) {
+          <h3 class="tit">{{ heading() }}</h3>
+        }
+        @if (description()) {
+          <div>
+            <p>{{ description() }}</p>
+          </div>
+        }
       </div>
     }
     @if (!readonly()) {
@@ -250,10 +255,14 @@ export class KrdsFileUpload {
         errorMessage: error ?? undefined
       }
       added.push(info)
-      if (error) this.fileError.emit({ file: info, error })
+    }
+    if (!added.length) return
+    // 목록에 넣은 뒤 알린다: 처리기에서 files를 바꾸면(업로드 시작으로 status를 uploading으로 등) 그대로 남는다
+    this.files.set([...current, ...added])
+    for (const info of added) {
+      if (info.errorMessage) this.fileError.emit({ file: info, error: info.errorMessage })
       else this.fileAdded.emit(info)
     }
-    if (added.length) this.files.set([...current, ...added])
   }
 
   protected onFileChange(input: HTMLInputElement) {

@@ -46,7 +46,7 @@ Angular `^22.2.0`이 필요합니다.
 - [x] 도움: 패널 `<krds-panel>`, 맥락적 도움말 `<krds-contextual-help>`, 코치마크 `<krds-coach-mark>`, 툴팁 `<krds-tooltip>`, 음성 지원 `button[krdsTts]`
 - [x] 설정: 언어 변경 `<krds-language-switcher>`, 화면 크기 조정 `<krds-resize>`, 드롭다운 `[krdsDropdown]`
 - [x] 콘텐츠: 접근 가능한 미디어 `figure[krdsMedia]`, 숨긴 콘텐츠 `class="sr-only"` (KRDS CSS 클래스라 디렉티브 없이 `[class.sr-only]="조건"`으로 씀)
-- [ ] 모바일: 범위슬라이드, 수량 토글, 토스트, 스낵바, 탭바, 스플래시 스크린
+- [x] 모바일: 범위슬라이드 `<krds-range-slider>`, 수량 토글 `<krds-quantity-toggle>`, 토스트 `<krds-toast>`·`KrdsToastService`, 스낵바 `<krds-snackbar>`·`KrdsSnackbarService`, 탭바 `nav[krdsTabBar]` (스플래시 스크린은 krds-vue처럼 제공하지 않음: 각 플랫폼의 기본 기능 영역)
 - [ ] 부가 컴포넌트: 아이콘, 레이아웃
 
 폼 컴포넌트는 기본 입력 요소를 그대로 씁니다. 텍스트 입력 필드·텍스트 영역은 `krdsInput`, 셀렉트는 `krdsSelect`, 체크박스·라디오·토글 스위치 안의 input은 `krdsControl`로 표시하면, 감싸는 컴포넌트가 KRDS 마크업과 label·도움말 연결(`aria-describedby`, 오류 상태의 `aria-invalid`)을 맡습니다. 값과 검증은 기본 요소 그대로라 `[(ngModel)]`, reactive forms, Signal Forms(`[formField]`), `required` 같은 기본 속성이 그대로 동작합니다.

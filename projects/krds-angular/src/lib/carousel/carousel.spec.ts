@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core'
-import { expectNoA11yViolations, render } from '../../test/render'
+import { expectNoA11yViolations, render, user } from '../../test/render'
 import { KrdsCarousel, KrdsSlide } from './carousel'
 
 // 템플릿은 테스트마다 render()에서 덮어쓴다
@@ -90,8 +90,11 @@ describe('KrdsCarousel', () => {
   it('자동 재생: 간격마다 넘기고, 마우스를 올리면 멈추고, 멈춤 버튼을 누르면 재생 버튼으로', async () => {
     const { host, el, $, stable } = await render(
       Host,
-      `<krds-carousel variant="banner" autoplay [autoplayDelay]="50" (play)="events.push('play')" (stop)="events.push('stop')">${slides(3)}</krds-carousel>`
+      `<p class="away">포인터를 둘 곳</p><krds-carousel variant="banner" autoplay [autoplayDelay]="50" (play)="events.push('play')" (stop)="events.push('stop')">${slides(3)}</krds-carousel>`
     )
+    // 실제 마우스 포인터가 캐러셀 위에 있으면 (화면 배치가 바뀔 때도) 멈추므로, 포인터를 캐러셀 밖으로 옮겨 두고 시작한다
+    await user.hover($('.away'))
+    $('krds-carousel').dispatchEvent(new MouseEvent('mouseleave'))
     const play = $<HTMLButtonElement>('.swiper-button-play')
     const stop = $<HTMLButtonElement>('.swiper-button-stop')
     await vi.waitFor(() => expect(getComputedStyle(stop).display).not.toBe('none'))

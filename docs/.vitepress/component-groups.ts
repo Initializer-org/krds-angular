@@ -10,6 +10,16 @@ export const componentGroups: { text: string; pages: [name: string, slug: string
       ['버튼 Button', 'button'],
       ['플로팅 버튼 Floating action button', 'floating-button']
     ]
+  },
+  {
+    text: '선택',
+    pages: [
+      ['라디오 버튼 Radio button', 'radio'],
+      ['체크박스 Checkbox', 'checkbox'],
+      ['셀렉트 Select', 'select'],
+      ['태그 Tag', 'tag'],
+      ['토글 스위치 Toggle switch', 'toggle-switch']
+    ]
   }
 ]
 

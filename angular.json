@@ -29,7 +29,8 @@
           "options": {
             "tsConfig": "projects/krds-angular/tsconfig.spec.json",
             "browsers": ["chromiumHeadless"],
-            "buildTarget": "krds-angular:test-build"
+            "buildTarget": "krds-angular:test-build",
+            "browserViewport": "1200x900"
           }
         },
         "test-build": {

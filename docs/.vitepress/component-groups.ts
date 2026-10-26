@@ -4,6 +4,17 @@
  */
 export const componentGroups: { text: string; pages: [name: string, slug: string][] }[] = [
   {
+    text: '탐색',
+    pages: [
+      ['건너뛰기 링크 Skip link', 'skip-link'],
+      ['메인 메뉴 Main menu', 'main-menu'],
+      ['브레드크럼 Breadcrumb', 'breadcrumb'],
+      ['사이드 메뉴 Side navigation', 'side-navigation'],
+      ['콘텐츠 내 탐색 In-page navigation', 'in-page-navigation'],
+      ['페이지네이션 Pagination', 'pagination']
+    ]
+  },
+  {
     text: '레이아웃 및 표현',
     pages: [
       ['구조화 목록 Structured list', 'structured-list'],

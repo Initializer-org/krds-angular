@@ -25,8 +25,12 @@ describe('KrdsPagination', () => {
     const current = $('.page-link.active')
     expect(current.getAttribute('aria-current')).toBe('page')
     expect(current.querySelector('.sr-only')?.textContent).toBe('현재페이지')
-    expect($('.page-navi.prev').tagName).toBe('SPAN')
-    expect($('.page-navi.prev').classList).toContain('disabled')
+    // 첫 페이지의 이전은 초점을 받지 않는 비활성 링크
+    const prev = $('.page-navi.prev')
+    expect(prev.classList).toContain('disabled')
+    expect(prev.getAttribute('role')).toBe('link')
+    expect(prev.getAttribute('aria-disabled')).toBe('true')
+    expect(prev.hasAttribute('href')).toBe(false)
 
     host.page.set(10)
     await stable()
@@ -35,7 +39,8 @@ describe('KrdsPagination', () => {
     host.page.set(20)
     await stable()
     expect(pages(el)).toEqual(['1', '…', '13', '14', '15', '16', '17', '18', '19', '20'])
-    expect($('.page-navi.next').tagName).toBe('SPAN')
+    expect($('.page-navi.next').getAttribute('aria-disabled')).toBe('true')
+    expect($('.page-navi.next').hasAttribute('href')).toBe(false)
 
     host.max.set(10)
     host.page.set(1)
@@ -55,8 +60,11 @@ describe('KrdsPagination', () => {
     expect(location.hash).toBe(hash)
   })
 
-  it('접근성 위반이 없다', async () => {
-    const { el } = await render(Host, '<nav krdsPagination [max]="20" [page]="10"></nav>')
+  it('접근성 위반이 없다 (가운데 페이지, 이전이 비활성인 첫 페이지)', async () => {
+    const { el } = await render(
+      Host,
+      '<nav krdsPagination [max]="20" [page]="10"></nav><nav krdsPagination [max]="20" label="두 번째"></nav>'
+    )
     await expectNoA11yViolations(el)
   })
 })

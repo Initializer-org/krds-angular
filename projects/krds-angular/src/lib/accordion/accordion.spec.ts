@@ -66,6 +66,34 @@ describe('KrdsAccordion', () => {
     expect(a.getAttribute('aria-expanded')).toBe('false')
   })
 
+  it('제목 수준: 기본 h5, headingLevel로 페이지 제목 구조에 맞춤', async () => {
+    const { $, $$, host, stable } = await render(
+      Host,
+      `
+        <div krdsAccordion><krds-accordion-item label="기본">A</krds-accordion-item></div>
+        <div krdsAccordion headingLevel="3" [(open)]="open"><krds-accordion-item value="b" label="수준 3">B</krds-accordion-item></div>
+      `
+    )
+    const [first, second] = $$('.accordion-header')
+    expect(first.tagName).toBe('H5')
+    expect(second.tagName).toBe('H3')
+    // 제목 수준이 바뀌어도 버튼과 펼침 연결은 그대로
+    const button = second.querySelector<HTMLButtonElement>('button.btn-accordion')!
+    expect(button.textContent?.trim()).toBe('수준 3')
+    host.open.set('b')
+    await stable()
+    expect(button.getAttribute('aria-expanded')).toBe('true')
+    expect($(`#${button.getAttribute('aria-controls')}`).getAttribute('aria-labelledby')).toBe(button.id)
+  })
+
+  it('접근성 위반이 없다 (h2 아래 headingLevel 3: 제목 수준을 건너뛰지 않음)', async () => {
+    const { el } = await render(
+      Host,
+      '<h2>자주 묻는 질문</h2><div krdsAccordion headingLevel="3" [open]="\'a\'"><krds-accordion-item value="a" label="질문 1">답 1</krds-accordion-item></div>'
+    )
+    await expectNoA11yViolations(el)
+  })
+
   it('접근성 위반이 없다', async () => {
     const { el } = await render(
       Host,

@@ -28,7 +28,7 @@
 
 ## 셀 템플릿
 
-배지·버튼·체크박스처럼 글자가 아닌 내용은 열 이름(`name`)을 준 템플릿으로 그립니다. `<ng-template krdsCell="열 이름">`은 본문 셀 내용을 바꾸고 `let-row`(행), `let-value="value"`(`field`로 꺼낸 값), `let-column="column"`, `let-index="index"`를 받습니다. `<ng-template krdsHeader="열 이름">`은 헤더 셀 내용을 바꿔 화면에 숨긴 열 제목 등에 씁니다. 셀 태그(첫 열은 `th scope="row"`)와 `style`·`classes`는 그대로 유지되고, 템플릿으로만 그리는 열은 `field`를 생략합니다. 버튼처럼 같은 이름이 행마다 반복되면 숨김 텍스트로 어느 행의 버튼인지 알려 줍니다.
+배지·버튼·체크박스처럼 글자가 아닌 내용은 열 이름(`name`)을 준 템플릿으로 그립니다. `<ng-template krdsCell="열 이름">`은 본문 셀 내용을 바꾸고 `let-row`(행), `let-value="value"`(`field`로 꺼낸 값), `let-column="column"`, `let-index="index"`를 받습니다. `[krdsCellOf]="rows"`를 함께 주면 `row`가 행 타입이 되어 `row.title` 같은 접근을 템플릿 타입 검사가 확인합니다. `<ng-template krdsHeader="열 이름">`은 헤더 셀 내용을 바꿔 화면에 숨긴 열 제목 등에 씁니다. 셀 태그(첫 열은 `th scope="row"`)와 `style`·`classes`는 그대로 유지되고, 템플릿으로만 그리는 열은 `field`를 생략합니다. 버튼처럼 같은 이름이 행마다 반복되면 숨김 텍스트로 어느 행의 버튼인지 알려 줍니다.
 
 템플릿 안의 `row`는 `object`, `value`는 `unknown` 타입이므로 행의 속성을 쓰려면 예제의 `titleOf`처럼 행 타입으로 바꿔 씁니다.
 
@@ -64,12 +64,12 @@
 
 템플릿에서 받는 변수입니다.
 
-| 템플릿 변수           | 타입              | 설명                 |
-| --------------------- | ----------------- | -------------------- |
-| `let-row`             | `object`          | 행                   |
-| `let-value="value"`   | `unknown`         | `field`로 꺼낸 셀 값 |
-| `let-column="column"` | `KrdsTableColumn` | 열                   |
-| `let-index="index"`   | `number`          | 행 순서 (0부터)      |
+| 템플릿 변수           | 타입              | 설명                                                |
+| --------------------- | ----------------- | --------------------------------------------------- |
+| `let-row`             | 행 타입           | 행 (`[krdsCellOf]`로 정한 행 타입, 없으면 `object`) |
+| `let-value="value"`   | `unknown`         | `field`로 꺼낸 셀 값                                |
+| `let-column="column"` | `KrdsTableColumn` | 열                                                  |
+| `let-index="index"`   | `number`          | 행 순서 (0부터)                                     |
 
 ## KrdsTableHeader
 

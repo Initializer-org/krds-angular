@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
-import { userEvent } from 'vitest/browser'
-import { expectNoA11yViolations, render } from '../../test/render'
+import { expectNoA11yViolations, render, user } from '../../test/render'
 import { KrdsInPageAction, KrdsInPageNavigation, type KrdsInPageNavClick } from './in-page-navigation'
 
 // 템플릿은 테스트마다 render()에서 덮어쓴다
@@ -46,7 +45,7 @@ describe('KrdsInPageNavigation', () => {
     await vi.waitFor(() => expect(link(el, '서비스 개요').classList).toContain('active'))
     expect(link(el, '서비스 개요').getAttribute('aria-current')).toBe('true')
 
-    await userEvent.click(link(el, '제출 서류'))
+    await user.click(link(el, '제출 서류'))
     expect(host.clicks.map(({ item }) => item.text)).toEqual(['제출 서류'])
     await vi.waitFor(() => expect(Math.abs(document.getElementById('section_03')!.getBoundingClientRect().top)).toBeLessThan(2), {
       timeout: 3000
@@ -60,7 +59,7 @@ describe('KrdsInPageNavigation', () => {
     await vi.waitFor(() => expect(link(el, '서비스 개요').classList).toContain('active'))
 
     link(el, '신청 방법').focus()
-    await userEvent.keyboard('{Enter}')
+    await user.keyboard('{Enter}')
     await vi.waitFor(() => expect(document.activeElement).toBe(document.querySelector('#section_02 .sec-tit')))
   })
 

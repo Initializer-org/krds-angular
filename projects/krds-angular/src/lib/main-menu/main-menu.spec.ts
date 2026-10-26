@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core'
-import { page, userEvent } from 'vitest/browser'
-import { controlledBy, expectNoA11yViolations, isVisible, render } from '../../test/render'
+import { page } from 'vitest/browser'
+import { controlledBy, expectNoA11yViolations, isVisible, render, user } from '../../test/render'
 import { KrdsMainMenu, KrdsMainMenuBanner, KrdsMainMenuBottom, type KrdsMainMenuItem, type KrdsMainMenuToggle } from './main-menu'
 
 /** PC 메가 메뉴 데이터 (2단계 컬럼 + 마지막 단계) */
@@ -108,7 +108,7 @@ describe('KrdsMainMenu (PC)', () => {
     expect(isVisible(panel)).toBe(false)
     expect(about.hasAttribute('aria-expanded')).toBe(false)
 
-    await userEvent.click(trigger)
+    await user.click(trigger)
     expect(trigger.getAttribute('aria-expanded')).toBe('true')
     expect(trigger.classList).toContain('active')
     await vi.waitFor(() => expect(isVisible(panel)).toBe(true))
@@ -128,45 +128,45 @@ describe('KrdsMainMenu (PC)', () => {
     expect(search.hasAttribute('aria-expanded')).toBe(false)
     expect(byText(el, 'a', '외부 서비스').title).toBe('새 창 열림')
 
-    await userEvent.click(support)
+    await user.click(support)
     expect(support.getAttribute('aria-expanded')).toBe('true')
     expect(apply.getAttribute('aria-expanded')).toBe('false')
     await vi.waitFor(() => expect(isVisible(controlledBy(support))).toBe(true))
 
     // 2단계 사이 방향키 (초점만 이동)
-    await userEvent.keyboard('{ArrowDown}')
+    await user.keyboard('{ArrowDown}')
     expect(document.activeElement).toBe(job)
-    await userEvent.keyboard('{ArrowRight}')
+    await user.keyboard('{ArrowRight}')
     expect(document.activeElement).toBe(search)
-    await userEvent.keyboard('{ArrowUp}')
+    await user.keyboard('{ArrowUp}')
     expect(document.activeElement).toBe(job)
-    await userEvent.keyboard('{ArrowLeft}')
+    await user.keyboard('{ArrowLeft}')
     expect(document.activeElement).toBe(support)
 
     // 설명형 링크도 selected면 강조
-    await userEvent.click(job)
+    await user.click(job)
     expect(byText(el, '.type-description a', '직업 훈련').classList).toContain('active')
 
     // Esc로 닫으면 1단계 버튼으로 초점
-    await userEvent.keyboard('{Escape}')
+    await user.keyboard('{Escape}')
     expect(trigger.getAttribute('aria-expanded')).toBe('false')
     expect(document.activeElement).toBe(trigger)
     await vi.waitFor(() => expect(document.body.classList).not.toContain('is-gnb-web'))
     expect(document.querySelector('.gnb-backdrop')).toBeNull()
 
     // 1단계 방향키·Home·End
-    await userEvent.keyboard('{ArrowRight}')
+    await user.keyboard('{ArrowRight}')
     expect(document.activeElement).toBe(policy)
-    await userEvent.keyboard('{ArrowDown}')
+    await user.keyboard('{ArrowDown}')
     expect(document.activeElement).toBe(notice)
-    await userEvent.keyboard('{End}')
+    await user.keyboard('{End}')
     expect(document.activeElement).toBe(about)
-    await userEvent.keyboard('{Home}')
+    await user.keyboard('{Home}')
     expect(document.activeElement).toBe(trigger)
 
     // 열린 상태에서 다른 1단계를 누르면 전환 (이전 패널 닫힘도 알림)
-    await userEvent.click(trigger)
-    await userEvent.click(policy)
+    await user.click(trigger)
+    await user.click(policy)
     expect(trigger.getAttribute('aria-expanded')).toBe('false')
     expect(policy.getAttribute('aria-expanded')).toBe('true')
     expect(host.toggles.slice(-3)).toEqual([
@@ -188,8 +188,8 @@ describe('KrdsMainMenu (PC)', () => {
       inHeader('<krds-main-menu [items]="pcItems" (itemClick)="$event.event.preventDefault(); clicked.push($event.item.text)" />')
     )
     const trigger = byText(el, 'button', '정보서비스')
-    await userEvent.click(trigger)
-    await userEvent.click(byText(el, 'a', '전입신고'))
+    await user.click(trigger)
+    await user.click(byText(el, 'a', '전입신고'))
     expect(host.clicked.at(-1)).toBe('전입신고')
     expect(trigger.getAttribute('aria-expanded')).toBe('false')
     await vi.waitFor(() => expect(document.activeElement).toBe(trigger))
@@ -202,21 +202,21 @@ describe('KrdsMainMenu (PC)', () => {
     )
     const trigger = byText(el, 'button', '알림소식')
     const panel = controlledBy(trigger)!
-    await userEvent.click(trigger)
+    await user.click(trigger)
     await vi.waitFor(() => expect(isVisible(panel)).toBe(true))
     expect(panel.querySelector('.gnb-sub-list.single-list.between')).toBeTruthy()
 
     await vi.waitFor(async () => {
       trigger.focus()
-      await userEvent.keyboard('{Tab}')
+      await user.keyboard('{Tab}')
       expect(document.activeElement).toBe(byText(el, 'a', '공지사항'))
     })
     expect(trigger.getAttribute('aria-expanded')).toBe('true')
-    await userEvent.keyboard('{Shift>}{Tab}{/Shift}')
+    await user.keyboard('{Shift>}{Tab}{/Shift}')
     expect(document.activeElement).toBe(trigger)
-    await userEvent.keyboard('{End}')
+    await user.keyboard('{End}')
     expect(trigger.getAttribute('aria-expanded')).toBe('true')
-    await userEvent.keyboard('{Tab}')
+    await user.keyboard('{Tab}')
     expect(document.activeElement).toBe(byText(el, 'a', '본문 링크'))
     expect(trigger.getAttribute('aria-expanded')).toBe('false')
     await expectNoA11yViolations(el)
@@ -225,7 +225,7 @@ describe('KrdsMainMenu (PC)', () => {
   it('접근성 위반이 없다', async () => {
     const { el } = await render(Host, inHeader('<krds-main-menu [items]="pcItems" />'))
     const trigger = byText(el, 'button', '정보서비스')
-    await userEvent.click(trigger)
+    await user.click(trigger)
     // 전환 중에는 패널이 숨겨져 검사에서 빠지므로 다 보일 때까지 기다린다
     await vi.waitFor(() => expect(isVisible(controlledBy(byText(el, 'button', '민원신청'))?.querySelector('a'))).toBe(true))
     await expectNoA11yViolations(el)
@@ -256,7 +256,7 @@ describe('KrdsMainMenu (모바일)', () => {
     expect(drawer.classList).toContain('krds-main-menu-mobile')
     expect(isVisible(drawer)).toBe(false)
 
-    await userEvent.click(opener)
+    await user.click(opener)
     await vi.waitFor(() => expect(drawer.classList).toContain('is-open'))
     expect(document.body.classList).toContain('is-gnb-mobile')
     await vi.waitFor(() => expect(document.activeElement).toBe(wrap))
@@ -264,11 +264,11 @@ describe('KrdsMainMenu (모바일)', () => {
 
     // 포커스 가두기
     const login = byText(el, 'button', '로그인을 해주세요')
-    await userEvent.keyboard('{Tab}')
+    await user.keyboard('{Tab}')
     expect(document.activeElement).toBe(login)
-    await userEvent.keyboard('{Shift>}{Tab}{/Shift}')
+    await user.keyboard('{Shift>}{Tab}{/Shift}')
     expect(document.activeElement).toBe(close)
-    await userEvent.keyboard('{Tab}')
+    await user.keyboard('{Tab}')
     expect(document.activeElement).toBe(login)
 
     // 1단계 탭과 패널
@@ -282,7 +282,7 @@ describe('KrdsMainMenu (모바일)', () => {
     const depth3Wrap = controlledBy(depth3Trigger)!
     expect(depth3Trigger.getAttribute('aria-expanded')).toBe('false')
     depth3Trigger.focus()
-    await userEvent.keyboard('{Enter}')
+    await user.keyboard('{Enter}')
     expect(depth3Trigger.getAttribute('aria-expanded')).toBe('true')
     expect(depth3Wrap.classList).toContain('is-open')
 
@@ -291,37 +291,37 @@ describe('KrdsMainMenu (모바일)', () => {
     const depth4Wrap = depth4Trigger.nextElementSibling as HTMLElement
     const prev = depth4Wrap.querySelector<HTMLElement>('.trigger-prev')!
     await vi.waitFor(() => expect(isVisible(depth4Trigger)).toBe(true))
-    await userEvent.click(depth4Trigger)
+    await user.click(depth4Trigger)
     await vi.waitFor(() => expect(document.activeElement).toBe(prev))
     expect(depth4Wrap.classList).toContain('is-open')
     expect(depth4Trigger.getAttribute('aria-expanded')).toBe('true')
-    await userEvent.keyboard('{Shift>}{Tab}{/Shift}')
+    await user.keyboard('{Shift>}{Tab}{/Shift}')
     expect(document.activeElement).toBe(byText(depth4Wrap, 'a', '온라인 과정'))
-    await userEvent.keyboard('{Tab}')
+    await user.keyboard('{Tab}')
     expect(document.activeElement).toBe(prev)
-    await userEvent.keyboard('{Escape}')
+    await user.keyboard('{Escape}')
     expect(depth4Wrap.classList).not.toContain('is-open')
     expect(document.activeElement).toBe(depth4Trigger)
     expect(drawer.classList).toContain('is-open')
 
     // 이전화면 버튼으로 닫기
-    await userEvent.keyboard('{Enter}')
+    await user.keyboard('{Enter}')
     await vi.waitFor(() => expect(document.activeElement).toBe(prev))
-    await userEvent.click(prev)
+    await user.click(prev)
     expect(depth4Wrap.classList).not.toContain('is-open')
     expect(document.activeElement).toBe(depth4Trigger)
 
     // Esc로 드로어를 닫으면 연 버튼으로 초점
-    await userEvent.keyboard('{Escape}')
+    await user.keyboard('{Escape}')
     expect(host.open()).toBe(false)
     await vi.waitFor(() => expect(document.activeElement).toBe(opener))
     await vi.waitFor(() => expect(isVisible(drawer)).toBe(false))
     expect(document.body.classList).not.toContain('is-gnb-mobile')
 
     // 닫기 버튼
-    await userEvent.click(opener)
+    await user.click(opener)
     await vi.waitFor(() => expect(document.activeElement).toBe(wrap))
-    await userEvent.click(close)
+    await user.click(close)
     expect(host.open()).toBe(false)
   })
 
@@ -339,7 +339,7 @@ describe('KrdsMainMenu (모바일)', () => {
 
   it('접근성 위반이 없다', async () => {
     const { el, $ } = await render(Host, mobileTemplate)
-    await userEvent.click($('.opener'))
+    await user.click($('.opener'))
     await vi.waitFor(() => expect(document.activeElement).toBe($('.gnb-wrap')))
     await expectNoA11yViolations(el)
   })

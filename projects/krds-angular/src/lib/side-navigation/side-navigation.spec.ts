@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core'
-import { userEvent } from 'vitest/browser'
-import { controlledBy, expectNoA11yViolations, render } from '../../test/render'
+import { controlledBy, expectNoA11yViolations, render, user } from '../../test/render'
 import { KrdsSideNavigation, type KrdsSideNavClick, type KrdsSideNavItem } from './side-navigation'
 
 const menu = (): KrdsSideNavItem[] => [
@@ -36,9 +35,9 @@ const byText = (root: Element, selector: string, text: string) =>
 
 describe('KrdsSideNavigation', () => {
   it('2단계 펼침·3단계 팝업 열고 닫기와 초점 이동, [(items)]', async () => {
-    const { host, el, $, stable } = await render(
+    const { host, el, $, stable, click } = await render(
       Host,
-      '<nav krdsSideNavigation heading="1Depth-title" [(items)]="items"></nav><a href="#!" class="after">본문</a>'
+      '<nav krdsSideNavigation heading="1Depth-title" [(items)]="items"></nav><p class="outside">본문 영역</p>'
     )
     expect($('nav').className).toBe('krds-side-navigation')
     expect($('h2.lnb-tit').textContent).toBe('1Depth-title')
@@ -58,7 +57,7 @@ describe('KrdsSideNavigation', () => {
     expect(popupButton.getAttribute('aria-expanded')).toBe('false')
 
     // 열면 전환이 끝난 뒤 팝업 제목으로 초점
-    await userEvent.click(popupButton)
+    await user.click(popupButton)
     expect(popupButton.getAttribute('aria-expanded')).toBe('true')
     expect(popup.classList).toContain('active')
     expect(host.items()[0].subItems?.[0].expanded).toBe(true)
@@ -66,14 +65,14 @@ describe('KrdsSideNavigation', () => {
     expect(title.textContent?.trim()).toBe('3Depth-title')
 
     // 제목 버튼으로 닫으면 팝업 버튼으로 초점
-    await userEvent.keyboard('{Enter}')
+    await user.keyboard('{Enter}')
     expect(popupButton.getAttribute('aria-expanded')).toBe('false')
     await vi.waitFor(() => expect(document.activeElement).toBe(popupButton))
 
     // Tab으로 팝업을 벗어나면 닫히고, 초점은 옮겨 간 곳에 그대로 둔다 (WAI-ARIA 메뉴 패턴)
-    await userEvent.keyboard('{Enter}')
+    await user.keyboard('{Enter}')
     await vi.waitFor(() => expect(document.activeElement).toBe(title))
-    await userEvent.keyboard('{Tab}{Tab}{Tab}')
+    await user.keyboard('{Tab}{Tab}{Tab}')
     const link = byText(el, '.lnb-link', '3Depth-link')
     expect(document.activeElement).toBe(link)
     expect(popupButton.getAttribute('aria-expanded')).toBe('false')
@@ -81,15 +80,23 @@ describe('KrdsSideNavigation', () => {
     expect(document.activeElement).toBe(link)
 
     // 팝업이 열린 채로 2단계를 접으면 팝업도 닫힘
-    await userEvent.click(popupButton)
-    await userEvent.click(first)
+    // (열린 팝업이 2단계 버튼을 덮으므로 위치 판정 없이 누르고, 초점을 옮기지 않아 팝업이 열린 채로 둔다)
+    await user.click(popupButton)
+    expect(popupButton.getAttribute('aria-expanded')).toBe('true')
+    await click(first)
     expect(first.getAttribute('aria-expanded')).toBe('false')
-    await userEvent.click(first)
+    await click(first)
+    expect(popupButton.getAttribute('aria-expanded')).toBe('false')
+
+    // 팝업 밖 빈 곳을 누르면 닫힘
+    await user.click(popupButton)
+    expect(popupButton.getAttribute('aria-expanded')).toBe('true')
+    await click($('p.outside'))
     expect(popupButton.getAttribute('aria-expanded')).toBe('false')
 
     // 2단계는 키보드(Space)로도 펼침
     second.focus()
-    await userEvent.keyboard('[Space]')
+    await user.keyboard('[Space]')
     await stable()
     expect(second.getAttribute('aria-expanded')).toBe('true')
     expect(host.items()[1].expanded).toBe(true)
@@ -128,7 +135,7 @@ describe('KrdsSideNavigation', () => {
   it('접근성 위반이 없다 (팝업 열림)', async () => {
     const { el } = await render(Host, '<nav krdsSideNavigation heading="메뉴" [(items)]="items"></nav>')
     const popupButton = byText(el, '.lnb-toggle-popup', '3Depth-menu')
-    await userEvent.click(popupButton)
+    await user.click(popupButton)
     const popup = controlledBy(popupButton)!.closest('.lnb-submenu-lv2')!
     expect(popup.classList).toContain('active')
     await vi.waitFor(() => expect(document.activeElement).toBe(popup.querySelector('.lnb-btn-tit')))

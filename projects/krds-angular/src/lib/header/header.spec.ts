@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core'
-import { page, userEvent } from 'vitest/browser'
-import { expectNoA11yViolations, render } from '../../test/render'
+import { page } from 'vitest/browser'
+import { expectNoA11yViolations, render, user } from '../../test/render'
 import { KrdsMainMenu, type KrdsMainMenuItem } from '../main-menu/main-menu'
 import { KrdsHeader, KrdsHeaderBranding, KrdsHeaderUtility } from './header'
 
@@ -53,11 +53,11 @@ describe('KrdsHeader', () => {
       const all = $<HTMLButtonElement>('.btn-navi.all')
       const drawer = document.getElementById(all.getAttribute('aria-controls')!)!
       expect(drawer.classList).toContain('krds-main-menu-mobile')
-      await userEvent.click(all)
+      await user.click(all)
       await vi.waitFor(() => expect(drawer.classList).toContain('is-open'))
       expect(all.getAttribute('aria-expanded')).toBe('true')
       await vi.waitFor(() => expect(document.activeElement).toBe(drawer.querySelector('.gnb-wrap')))
-      await userEvent.keyboard('{Escape}')
+      await user.keyboard('{Escape}')
       await vi.waitFor(() => expect(document.activeElement).toBe(all))
       expect(all.getAttribute('aria-expanded')).toBe('false')
     } finally {

@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core'
-import { userEvent } from 'vitest/browser'
-import { classesOf, expectNoA11yViolations, render } from '../../test/render'
+import { classesOf, expectNoA11yViolations, render, user } from '../../test/render'
 import { KrdsTabPanel, KrdsTabs, type KrdsTabItem } from './tabs'
 
 // 템플릿은 테스트마다 render()에서 덮어쓴다
@@ -47,9 +46,9 @@ describe('KrdsTabs', () => {
     expect(getComputedStyle(panels[1]).display).not.toBe('none')
 
     tabs[1].focus()
-    await userEvent.keyboard('{ArrowLeft}')
+    await user.keyboard('{ArrowLeft}')
     expect(document.activeElement).toBe(tabs[0])
-    await userEvent.keyboard('{ArrowRight}')
+    await user.keyboard('{ArrowRight}')
     expect(document.activeElement).toBe(tabs[1])
   })
 

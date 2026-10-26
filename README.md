@@ -44,7 +44,7 @@ Angular `^22.2.0`이 필요합니다.
 - [x] 탐색: 건너뛰기 링크 `[krdsSkipLink]`, 메인 메뉴 `<krds-main-menu>`(PC·모바일), 브레드크럼 `nav[krdsBreadcrumb]`, 사이드 메뉴 `nav[krdsSideNavigation]`, 콘텐츠 내 탐색 `<krds-in-page-navigation>`, 페이지네이션 `nav[krdsPagination]`, 새 창 링크 `a[krdsExternal]`
 - [x] 아이덴티티: 공식 배너 `[krdsMasthead]`, 운영기관 식별자 `[krdsIdentifier]`, 헤더 `header[krdsHeader]`, 푸터 `footer[krdsFooter]`
 - [x] 도움: 패널 `<krds-panel>`, 맥락적 도움말 `<krds-contextual-help>`, 코치마크 `<krds-coach-mark>`, 툴팁 `<krds-tooltip>`, 음성 지원 `button[krdsTts]`
-- [ ] 설정: 언어 변경, 화면 크기 조정
+- [x] 설정: 언어 변경 `<krds-language-switcher>`, 화면 크기 조정 `<krds-resize>`, 드롭다운 `[krdsDropdown]`
 - [ ] 콘텐츠: 접근 가능한 미디어, 숨긴 콘텐츠
 - [ ] 모바일: 범위슬라이드, 수량 토글, 토스트, 스낵바, 탭바, 스플래시 스크린
 - [ ] 부가 컴포넌트: 아이콘, 레이아웃

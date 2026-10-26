@@ -1,7 +1,6 @@
 import { Component, signal } from '@angular/core'
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { userEvent } from 'vitest/browser'
-import { classesOf, expectNoA11yViolations, render } from '../../test/render'
+import { classesOf, expectNoA11yViolations, render, user } from '../../test/render'
 import { KrdsFormGroup } from '../form-group/form-group'
 import { KrdsInput } from '../input/input'
 import { KrdsDateInput } from './date-input'
@@ -166,15 +165,15 @@ describe('KrdsDateInput', () => {
 
     // 키보드: Enter로 열고 Tab으로 이전 달 버튼, Enter로 이동, Esc로 닫고 초점 복귀
     toggle.focus()
-    await userEvent.keyboard('{Enter}')
+    await user.keyboard('{Enter}')
     await vi.waitFor(() => expect(document.activeElement).toBe(wrap))
-    await userEvent.keyboard('{Tab}')
+    await user.keyboard('{Tab}')
     expect(document.activeElement).toBe($('.btn-cal-move.prev'))
     const before = caption()
-    await userEvent.keyboard('{Enter}')
+    await user.keyboard('{Enter}')
     await stable()
     expect(caption()).not.toBe(before)
-    await userEvent.keyboard('{Escape}')
+    await user.keyboard('{Escape}')
     await stable()
     expect(toggle.getAttribute('aria-expanded')).toBe('false')
     expect(document.activeElement).toBe(toggle)

@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core'
-import { userEvent } from 'vitest/browser'
-import { expectNoA11yViolations, render } from '../../test/render'
+import { expectNoA11yViolations, render, user } from '../../test/render'
 import { KrdsTabPanel, KrdsTabs } from '../tabs/tabs'
 import { KrdsPanel } from './panel'
 
@@ -34,14 +33,14 @@ describe('KrdsPanel', () => {
     const panel = $('.krds-help-panel')
     expect(panel.classList).not.toContain('expand')
 
-    await userEvent.click(expand)
+    await user.click(expand)
     expect(host.open()).toBe(true)
     expect(panel.classList).toContain('expand')
     expect($('.help-conts-area krds-tabs')).toBeTruthy()
 
     const fold = $<HTMLButtonElement>('.btn-help-panel.fold')
     await vi.waitFor(() => expect(getComputedStyle(fold).visibility).toBe('visible'))
-    await userEvent.click(fold)
+    await user.click(fold)
     expect(host.open()).toBe(false)
     expect(panel.classList).not.toContain('expand')
     expect(document.activeElement).toBe(expand)
@@ -74,7 +73,7 @@ describe('KrdsPanel', () => {
 
   it('접근성 위반이 없다', async () => {
     const { el, $ } = await render(Host, '<krds-panel [(open)]="open"><p>도움 내용</p></krds-panel>')
-    await userEvent.click($('.btn-help-panel.expand'))
+    await user.click($('.btn-help-panel.expand'))
     // 투명도 전환 중에는 글자가 흐리게 계산되므로 다 나타난 뒤 검사한다
     await vi.waitFor(() => expect(getComputedStyle($('.krds-help-panel')).opacity).toBe('1'))
     await expectNoA11yViolations(el)

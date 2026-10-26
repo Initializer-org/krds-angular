@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
-import { userEvent } from 'vitest/browser'
-import { expectNoA11yViolations, render } from '../../test/render'
+import { expectNoA11yViolations, render, user } from '../../test/render'
 import { KrdsSkipLink } from './skip-link'
 
 // 템플릿은 테스트마다 render()에서 덮어쓴다
@@ -23,10 +22,10 @@ describe('KrdsSkipLink', () => {
     expect(first.getBoundingClientRect().height).toBeLessThanOrEqual(1)
 
     document.body.focus()
-    await userEvent.tab()
+    await user.tab()
     expect(document.activeElement).toBe(first)
     await vi.waitFor(() => expect(first.getBoundingClientRect().height).toBeGreaterThan(1))
-    await userEvent.tab()
+    await user.tab()
     expect(document.activeElement).toBe(second)
     await expectNoA11yViolations(el)
   })

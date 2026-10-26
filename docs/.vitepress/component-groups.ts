@@ -98,6 +98,17 @@ export const componentGroups: { text: string; pages: [name: string, slug: string
     ]
   },
   {
+    text: '모바일',
+    pages: [
+      ['범위슬라이드 Range slider', 'range-slider'],
+      ['수량 토글 Quantity toggle', 'quantity-toggle'],
+      ['토스트 Toast', 'toast'],
+      ['스낵바 Snackbar', 'snackbar'],
+      ['탭바 Tab bar', 'tab-bar'],
+      ['스플래시 스크린 Splash screen', 'splash-screen']
+    ]
+  },
+  {
     text: '부가 컴포넌트',
     pages: [['폼 그룹 Form group', 'form-group']]
   }

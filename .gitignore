@@ -45,3 +45,7 @@ Thumbs.db
 
 # Vitest 브라우저 모드 실패 스크린샷
 /.vitest
+
+# VitePress 문서
+/docs/.vitepress/cache
+/docs/.vitepress/dist

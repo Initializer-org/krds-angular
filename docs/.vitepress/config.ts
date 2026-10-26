@@ -1,0 +1,249 @@
+import { resolve } from 'node:path'
+import angular from '@analogjs/vite-plugin-angular'
+import { defineConfig, postcssIsolateStyles } from 'vitepress'
+import type { HeadConfig, MarkdownRenderer } from 'vitepress'
+import { componentGroups, krdsGuides } from './component-groups.ts'
+import { pageDescription } from './pages.ts'
+
+const root = resolve(import.meta.dirname, '../..')
+
+const siteUrl = 'https://angular.krds.initializer.org'
+const siteDescription =
+  '대한민국 정부 디자인 시스템(KRDS)을 Angular로 구현한 컴포넌트 라이브러리 문서입니다. 공공 웹서비스를 위한 폼, 내비게이션, 레이아웃, 피드백 UI 예제와 API를 제공합니다.'
+
+/** 페이지 URL (cleanUrls 기준) */
+const pageUrl = (relativePath: string) => `${siteUrl}/${relativePath.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')}`
+
+/**
+ * 컴포넌트 문서의 '## API' 제목을 경계로 개요 / API 레퍼런스 탭 패널을 일반 HTML로 감싼다 (DocTabs는 탭 목록만 그림).
+ * 본문을 컴포넌트 슬롯에 넣지 않아야 Vue가 정적 내용을 문자열로 묶어 페이지 JS가 커지지 않는다
+ */
+const docTabs = (md: MarkdownRenderer) => {
+  md.core.ruler.push('doc-tabs', state => {
+    if (!state.env.relativePath?.startsWith('components/')) return
+    const { tokens } = state
+    const isH2 = (index: number) => tokens[index].type === 'heading_open' && tokens[index].tag === 'h2'
+    const api = tokens.findIndex((_, index) => isH2(index) && tokens[index + 1].content === 'API')
+    if (api < 0) return
+    const first = tokens.findIndex((_, index) => isH2(index))
+    const html = (content: string) => Object.assign(new state.Token('html_block', '', 0), { content })
+    const panel = (tab: string) =>
+      `<div id="doc-panel-${tab}" class="doc-tab-panel" data-tab="${tab}" role="tabpanel" aria-labelledby="doc-tab-${tab}">\n`
+    tokens.splice(api, 3, html(`</div>\n${panel('api')}`))
+    tokens.splice(first, 0, html(`<div class="doc-tabs" data-active="overview">\n<DocTabs />\n${panel('overview')}`))
+    tokens.push(html('</div>\n</div>\n'))
+  })
+}
+
+/** 컴포넌트 문서의 설명 문단(KRDS 가이드 문장) 아래에 KRDS 공식 가이드 링크 칩을 넣는다 (component-groups.ts의 krdsGuides) */
+const krdsGuideLink = (md: MarkdownRenderer) => {
+  md.core.ruler.push('krds-guide-link', state => {
+    const guide = krdsGuides[/^components\/(.+)\.md$/.exec(state.env.relativePath ?? '')?.[1] ?? '']
+    if (!guide) return
+    const { tokens } = state
+    const h1 = tokens.findIndex(token => token.type === 'heading_close' && token.tag === 'h1')
+    const description = tokens.findIndex((token, index) => index > h1 && token.type === 'paragraph_close')
+    if (h1 < 0 || description < 0) return
+    const entries = Object.entries(guide)
+    // 가이드가 하나면 'KRDS 가이드', 여럿이면 가이드 이름 (화면낭독기에는 'KRDS'를 붙여 읽힌다)
+    const links = entries.map(
+      ([name, code]) =>
+        `<a href="https://www.krds.go.kr/html/site/component/component_${code}.html" target="_blank" rel="noreferrer" title="새 창 열림">${entries.length > 1 ? `<span class="sr-only">KRDS </span>${name}` : 'KRDS 가이드'}</a>`
+    )
+    tokens.splice(
+      description + 1,
+      0,
+      Object.assign(new state.Token('html_block', '', 0), { content: `<p class="krds-guides">${links.join('')}</p>\n` })
+    )
+  })
+}
+
+export default defineConfig({
+  lang: 'ko-KR',
+  title: 'KRDS Angular',
+  description: siteDescription,
+  cleanUrls: true,
+  markdown: {
+    // 예제 컴포넌트의 인라인 템플릿(template: `...`)까지 HTML로 강조한다 (Shiki angular-ts는 TypeScript 전체를 포함)
+    languageAlias: { ts: 'angular-ts' },
+    languageLabel: { 'angular-ts': 'ts' },
+    config: md => {
+      krdsGuideLink(md)
+      docTabs(md)
+    }
+  },
+  // 페이지 수정일 표시와 사이트맵 lastmod (배포 워크플로는 전체 히스토리로 체크아웃)
+  lastUpdated: true,
+  sitemap: {
+    hostname: siteUrl,
+    // iframe 예제 페이지는 검색 대상에서 제외
+    transformItems: items => items.filter(item => !item.url.startsWith('frame/'))
+  },
+  head: [
+    ['link', { rel: 'icon', type: 'image/svg+xml', sizes: 'any', href: '/favicon.svg' }],
+    ['link', { rel: 'manifest', href: '/site.webmanifest' }],
+    ['meta', { name: 'theme-color', content: '#256ef4' }],
+    ['meta', { name: 'author', content: 'Initializer Team' }],
+    [
+      'meta',
+      {
+        name: 'keywords',
+        content: 'KRDS, KRDS Angular, Angular, Angular 컴포넌트, TypeScript, 디자인 시스템, 정부 디자인 시스템, 공공 웹서비스'
+      }
+    ],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:site_name', content: 'KRDS Angular' }],
+    ['meta', { property: 'og:locale', content: 'ko_KR' }],
+    ['meta', { property: 'og:image', content: `${siteUrl}/og-image.png` }],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:image', content: `${siteUrl}/og-image.png` }],
+    [
+      'script',
+      { type: 'application/ld+json' },
+      JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareSourceCode',
+        name: 'KRDS Angular',
+        description: siteDescription,
+        url: siteUrl,
+        codeRepository: 'https://github.com/Initializer-org/krds-angular',
+        programmingLanguage: ['TypeScript', 'Angular'],
+        runtimePlatform: 'Angular',
+        license: 'https://opensource.org/licenses/MIT'
+      })
+    ],
+    // VitePress 다크 모드를 KRDS 고대비 모드로 연결
+    [
+      'script',
+      {},
+      `(() => {
+        const html = document.documentElement
+        const sync = () => (html.dataset.krdsMode = html.classList.contains('dark') ? 'high-contrast' : 'light')
+        new MutationObserver(sync).observe(html, { attributes: true, attributeFilter: ['class'] })
+        sync()
+      })()`
+    ]
+  ],
+  // 페이지별 설명: frontmatter description이 없으면 제목 다음 첫 문단(컴포넌트 설명)을 쓴다
+  transformPageData(pageData, { siteConfig }) {
+    if (pageData.frontmatter.description || pageData.relativePath.startsWith('frame/')) return
+    const description = pageDescription(resolve(siteConfig.srcDir, pageData.relativePath))
+    if (description) pageData.description = description
+  },
+  transformHead({ pageData, title, description, assets }) {
+    // KRDS 글꼴은 CSS를 읽은 뒤에야 받기 시작해 첫 화면이 시스템 글꼴로 그려졌다가 바뀌므로 미리 받는다
+    const fonts = assets
+      .filter(file => /\/PretendardGOV-[\w.-]+\.woff2$/.test(file))
+      .map((href): HeadConfig => ['link', { rel: 'preload', href, as: 'font', type: 'font/woff2', crossorigin: '' }])
+    if (pageData.relativePath.startsWith('frame/')) return [...fonts, ['meta', { name: 'robots', content: 'noindex' }]]
+    const url = pageUrl(pageData.relativePath)
+    return [
+      ...fonts,
+      ['link', { rel: 'canonical', href: url }],
+      ['meta', { property: 'og:url', content: url }],
+      ['meta', { property: 'og:title', content: title }],
+      ['meta', { property: 'og:description', content: description }],
+      ['meta', { name: 'twitter:title', content: title }],
+      ['meta', { name: 'twitter:description', content: description }]
+    ]
+  },
+  themeConfig: {
+    logo: { light: '/logo.svg', dark: '/logo-dark.svg', alt: '' },
+    // 새 창으로 여는 본문 링크에 ↗ 표시 (예제 영역 .vp-raw는 격리돼 붙지 않음)
+    externalLinkIcon: true,
+    nav: [
+      // KRDS Vue · React · Angular 전환 (theme/FrameworkSwitch.vue)
+      { component: 'FrameworkSwitch', props: { current: 'angular' } },
+      { text: '시작하기', link: '/guide/getting-started' },
+      { text: '컴포넌트', link: '/components/' }
+    ],
+    sidebar: [
+      {
+        text: '가이드',
+        items: [
+          { text: '시작하기', link: '/guide/getting-started' },
+          { text: '컴포넌트 목록', link: '/components/' }
+        ]
+      },
+      ...componentGroups.map(group => ({
+        text: group.text,
+        collapsed: false,
+        items: group.pages.map(([name, slug]) => ({ text: name, link: `/components/${slug}` }))
+      }))
+    ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/Initializer-org/krds-angular' }],
+    editLink: {
+      pattern: 'https://github.com/Initializer-org/krds-angular/edit/main/docs/:path',
+      text: '이 페이지 수정하기'
+    },
+    search: {
+      provider: 'local',
+      options: {
+        translations: {
+          button: { buttonText: '검색', buttonAriaLabel: '검색' },
+          modal: {
+            displayDetails: '상세 목록 표시',
+            resetButtonTitle: '검색어 지우기',
+            backButtonTitle: '검색 닫기',
+            noResultsText: '검색 결과가 없습니다',
+            footer: { selectText: '선택', navigateText: '이동', closeText: '닫기' }
+          }
+        }
+      }
+    },
+    outline: { label: '이 페이지에서' },
+    docFooter: { prev: '이전', next: '다음' },
+    lastUpdated: { text: '마지막 수정', formatOptions: { dateStyle: 'medium', forceLocale: true } },
+    darkModeSwitchLabel: '선명하게 (어두운 배경)',
+    lightModeSwitchTitle: '기본 (밝은 배경)으로 전환',
+    darkModeSwitchTitle: '선명하게 (어두운 배경)으로 전환',
+    sidebarMenuLabel: '메뉴',
+    returnToTopLabel: '맨 위로',
+    // 왼쪽 저작권, 오른쪽 링크 한 줄(style.css). 화면 순서와 DOM 순서를 맞추려고 message에 저작권, copyright에 링크를 둔다
+    footer: {
+      message:
+        'Copyright © 2026 Initializer Team. <a href="https://github.com/Initializer-org/krds-angular/blob/main/LICENSE">MIT License</a>로 배포됩니다.',
+      copyright: [
+        ['GitHub', 'https://github.com/Initializer-org/krds-angular'],
+        ['KRDS Vue', 'https://krds.initializer.org'],
+        ['KRDS React', 'https://react.krds.initializer.org'],
+        ['KRDS 공식 사이트', 'https://www.krds.go.kr']
+      ]
+        .map(([text, href]) => `<a href="${href}">${text}</a>`)
+        .join('')
+    }
+  },
+  vite: {
+    // 예제(docs/components/demos/*.ts)를 Angular 컴파일러로 빌드한다. 템플릿 타입 검사는 pnpm docs:check(ngc)가 맡는다
+    plugins: [angular({ tsconfig: resolve(root, 'docs/tsconfig.json') })],
+    // Angular 플러그인은 Vite의 TypeScript 변환을 끄므로, 개발 서버에서 문서 테마(.vitepress)의 TypeScript는 Vite가 그대로 변환하게 둔다
+    oxc: { include: /\/docs\/\.vitepress\/.*\.ts$/ },
+    resolve: {
+      alias: [
+        // 예제 코드를 그대로 복사해 쓸 수 있도록 패키지 이름으로 import하고, 빌드는 소스를 사용
+        { find: /^@krds\.ui\/angular$/, replacement: resolve(root, 'projects/krds-angular/src/public-api.ts') },
+        // KRDS 스타일의 이미지·글꼴 경로 (theme/krds.scss)
+        { find: /^@krds-assets\//, replacement: `${resolve(root, 'projects/krds-angular/public')}/` }
+      ]
+    },
+    css: {
+      postcss: {
+        plugins: [
+          // 예제 영역(.vp-raw)에 VitePress 본문·기본 스타일(vp-doc.css, base.css)이 새지 않도록 격리
+          postcssIsolateStyles(),
+          {
+            // KRDS는 html font-size를 62.5%(1rem = 10px)로 두므로, 16px 기준인 VitePress 테마의 rem을 px로 고정한다
+            postcssPlugin: 'vitepress-rem-to-px',
+            Declaration(decl) {
+              if (decl.source?.input.file?.includes('/node_modules/vitepress/') && decl.value.includes('rem')) {
+                decl.value = decl.value.replace(/(\d*\.?\d+)rem\b/g, (_, value: string) => `${Number(value) * 16}px`)
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+})

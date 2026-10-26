@@ -1,0 +1,11 @@
+{
+  "name": "KRDS Angular",
+  "short_name": "KRDS Angular",
+  "description": "대한민국 정부 디자인 시스템(KRDS) Angular 컴포넌트 라이브러리 문서",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#256ef4",
+  "lang": "ko",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

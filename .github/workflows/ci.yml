@@ -40,3 +40,12 @@ jobs:
 
       - name: Build library
         run: pnpm build
+
+      - name: Type-check docs examples
+        run: pnpm docs:check
+
+      - name: Build docs
+        run: pnpm docs:build
+
+      - name: Check docs examples (렌더링 + a11y)
+        run: pnpm docs:test

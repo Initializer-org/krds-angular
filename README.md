@@ -2,6 +2,8 @@
 
 [KRDS(대한민국 정부 디자인 시스템)](https://www.krds.go.kr/html/site/index.html)를 Angular로 구현한 컴포넌트 라이브러리입니다. Vue 버전인 [@krds.ui/vue](https://github.com/Initializer-org/krds-vue)와 같은 KRDS 스타일을 씁니다.
 
+문서와 예제: https://angular.krds.initializer.org
+
 > 초기 개발 단계입니다. 아직 npm에 배포하지 않았습니다. KRDS 공식 분류의 컴포넌트를 모두 옮겼고(아래 [컴포넌트](#컴포넌트)), 스타일시트에는 KRDS 컴포넌트 CSS가 모두 들어 있습니다.
 
 ## 빠른 시작
@@ -70,6 +72,9 @@ pnpm test     # 실제 브라우저(Chromium)에서 단위 테스트와 axe-core
 pnpm build    # dist/krds-angular에 패키지 생성
 pnpm lint
 pnpm format
+pnpm docs:dev   # 문서 사이트(VitePress) 개발 서버, 예제는 docs/components/demos/*.ts
+pnpm docs:check # 문서 예제 템플릿 타입 검사 (ngc)
+pnpm docs:build && pnpm docs:test  # 문서 빌드 후 모든 페이지의 예제 렌더링·axe-core 검사
 ```
 
 ## 라이선스

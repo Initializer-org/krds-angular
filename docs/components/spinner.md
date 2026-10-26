@@ -20,7 +20,7 @@
 
 ## 입력 필드 로딩
 
-폼 그룹(`<krds-form-group>`)에 `loading`을 주면 입력 필드와 스피너를 `.form-spinner`로 감싸 스피너를 입력 필드 오른쪽 안에 표시합니다.
+[폼 그룹](/components/form-group)(`<krds-form-group>`)에 `loading`을 주면 입력 필드와 스피너를 `.form-spinner`로 감싸 스피너를 입력 필드 오른쪽 안에 표시합니다.
 
 <div class="demo vp-raw"><AngularDemo name="spinner/InputLoading" /></div>
 

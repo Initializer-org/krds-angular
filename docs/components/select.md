@@ -6,7 +6,7 @@
 
 기본 `<select>`에 `krdsSelect`를 붙입니다. 옵션·선택 값·`disabled`·`required`는 기본 요소 그대로라 `<option>`을 직접 넣고 `[(ngModel)]`, reactive forms, Signal Forms로 값을 연결합니다. 선택 전 안내 문구는 `<option value="" disabled>선택</option>`으로 넣습니다.
 
-폼 그룹(`<krds-form-group>`) 안에 넣으면 `label`이 셀렉트에 연결되고, `hint`는 `aria-describedby`로 연결됩니다.
+[폼 그룹](/components/form-group)(`<krds-form-group>`) 안에 넣으면 `label`이 셀렉트에 연결되고, `hint`는 `aria-describedby`로 연결됩니다.
 
 <div class="demo vp-raw"><AngularDemo name="select/Basic" /></div>
 

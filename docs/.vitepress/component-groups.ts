@@ -91,6 +91,13 @@ export const componentGroups: { text: string; pages: [name: string, slug: string
     ]
   },
   {
+    text: '콘텐츠',
+    pages: [
+      ['접근 가능한 미디어 Accessible multimedia', 'media'],
+      ['숨긴 콘텐츠 sr-only', 'sr-only']
+    ]
+  },
+  {
     text: '부가 컴포넌트',
     pages: [['폼 그룹 Form group', 'form-group']]
   }

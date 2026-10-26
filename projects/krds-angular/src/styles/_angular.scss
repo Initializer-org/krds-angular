@@ -1,0 +1,30 @@
+/**
+ * Angular 전용 스타일
+ * 컴포넌트 요소(krds-*)는 기본이 inline이라, KRDS 원본에서 같은 자리인 div처럼 블록으로 둔다.
+ * 우선순위 0인 선택자로 감싸 KRDS 클래스가 display(flex 등)를 정하면 그쪽을 따른다.
+ * 컴포넌트 요소가 KRDS 마크업의 바깥 틀이 되는 컴포넌트를 추가하면 여기에도 넣는다
+ */
+:where(
+  krds-accordion-item,
+  krds-carousel,
+  krds-checkbox,
+  krds-coach-mark,
+  krds-contextual-help,
+  krds-critical-alerts,
+  krds-date-input,
+  krds-disclosure,
+  krds-file-upload,
+  krds-floating-button,
+  krds-form-group,
+  krds-in-page-navigation,
+  krds-panel,
+  krds-radio,
+  krds-spinner,
+  krds-table,
+  krds-tabs,
+  krds-textarea,
+  krds-toggle-switch,
+  krds-tooltip
+) {
+  display: block;
+}

@@ -27,7 +27,18 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/krds-angular/tsconfig.spec.json"
+            "tsConfig": "projects/krds-angular/tsconfig.spec.json",
+            "browsers": ["chromiumHeadless"],
+            "buildTarget": "krds-angular:test-build",
+            "browserViewport": "1200x900"
+          }
+        },
+        "test-build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/krds-angular/src/public-api.ts",
+            "tsConfig": "projects/krds-angular/tsconfig.spec.json",
+            "styles": ["projects/krds-angular/src/styles/test.scss"]
           }
         }
       }

@@ -1,0 +1,8 @@
+/**
+ * 테스트 전용 스타일 진입점 (angular.json의 test-build)
+ * 테스트에는 CSS 규칙만 필요하므로 이미지·폰트 경로를 번들러가 찾지 않는 루트 경로로 둔다
+ */
+@use 'common/path' with (
+  $url: '/krds-test-assets'
+);
+@use 'main';

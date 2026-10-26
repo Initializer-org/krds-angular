@@ -1,5 +1,5 @@
 import ts from 'typescript'
-import { defineLoader } from 'vitepress'
+import { createMarkdownRenderer, defineLoader, type SiteConfig } from 'vitepress'
 
 export interface ComponentApi {
   selector?: string
@@ -7,6 +7,8 @@ export interface ComponentApi {
   inputs: { name: string; type: string; default?: string; required: boolean; twoWay: boolean; description: string }[]
   outputs: { name: string; type: string; description: string }[]
   methods: { name: string; signature: string; description: string }[]
+  /** 입력·출력·메서드가 쓰는 라이브러리 타입(KrdsSideNavItem 등)의 선언, 강조한 HTML */
+  types?: string
 }
 
 declare const data: Record<string, ComponentApi>
@@ -29,11 +31,12 @@ const stringOption = (options: ts.ObjectLiteralExpression | undefined, key: stri
 
 /**
  * 컴포넌트·디렉티브·서비스 소스에서 API 표를 만든다 (TypeScript 컴파일러 API).
- * signal 입력(input, input.required, model)·출력(output)과 공개 메서드를 선언 순서대로, 설명은 JSDoc에서 읽는다
+ * signal 입력(input, input.required, model)·출력(output)과 공개 메서드를 선언 순서대로, 설명은 JSDoc에서 읽는다.
+ * 여기서 쓰는 라이브러리 타입은 선언을 그대로 보여 준다 (그 타입이 다시 쓰는 타입까지)
  */
 export default defineLoader({
   watch: ['../../../projects/krds-angular/src/lib/**/*.ts'],
-  load(files): Record<string, ComponentApi> {
+  async load(files): Promise<Record<string, ComponentApi>> {
     const sources = files.filter(file => !file.endsWith('.spec.ts'))
     const program = ts.createProgram(sources, {
       strict: true,
@@ -70,8 +73,17 @@ export default defineLoader({
     }
 
     const apis: Record<string, ComponentApi> = {}
+    /** 내보내는 interface·type 선언 (값 목록 유니온은 표에서 펼치므로 뺀다) */
+    const declarations = new Map<string, string>()
     for (const file of sources) {
       for (const statement of program.getSourceFile(file)?.statements ?? []) {
+        const exported = ts.getCombinedModifierFlags(statement as ts.Declaration) & ts.ModifierFlags.Export
+        if (exported && (ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement))) {
+          const literals =
+            ts.isTypeAliasDeclaration(statement) && ts.isUnionTypeNode(statement.type) && statement.type.types.every(ts.isLiteralTypeNode)
+          if (!literals) declarations.set(statement.name.text, statement.getFullText().trim())
+          continue
+        }
         if (!ts.isClassDeclaration(statement) || !statement.name) continue
         const decorator = ts
           .getDecorators(statement)
@@ -130,6 +142,20 @@ export default defineLoader({
         }
         apis[statement.name.text] = api
       }
+    }
+
+    const config: SiteConfig = (globalThis as { VITEPRESS_CONFIG?: SiteConfig }).VITEPRESS_CONFIG!
+    const md = await createMarkdownRenderer(config.srcDir, config.markdown, config.site.base, config.logger)
+    const referenced = (text: string) => [...text.matchAll(/\bKrds\w+/g)].map(([name]) => name).filter(name => declarations.has(name))
+    for (const api of Object.values(apis)) {
+      const names = new Set(
+        [...api.inputs, ...api.outputs]
+          .map(({ type }) => type)
+          .concat(api.methods.map(({ signature }) => signature))
+          .flatMap(referenced)
+      )
+      for (const name of names) referenced(declarations.get(name)!).forEach(next => names.add(next))
+      if (names.size) api.types = await md.renderAsync(`\`\`\`ts\n${[...names].map(name => declarations.get(name)).join('\n\n')}\n\`\`\`\n`)
     }
     return apis
   }

@@ -1,7 +1,8 @@
 /**
  * 문서 사이트 예제 검사: 빌드한 사이트(docs/.vitepress/dist)의 모든 페이지를 Chromium으로 열어
  * Angular 예제가 오류 없이 그려지는지, 예제 영역에 axe-core 접근성 위반이 없는지 확인한다.
- * 사용: pnpm docs:build && pnpm docs:test
+ * 사용: pnpm docs:build && pnpm docs:test [경로 접두사...] (예: pnpm docs:test /components/select /frame/select)
+ * 포트는 DOCS_TEST_PORT(기본 4173)
  */
 import { spawn } from 'node:child_process'
 import { globSync, readFileSync } from 'node:fs'
@@ -10,7 +11,8 @@ import { relative } from 'node:path'
 import { chromium } from 'playwright'
 
 const dist = 'docs/.vitepress/dist'
-const port = 4173
+const port = Number(process.env.DOCS_TEST_PORT ?? 4173)
+const prefixes = process.argv.slice(2)
 const origin = `http://localhost:${port}`
 const require = createRequire(import.meta.url)
 const axeSource = readFileSync(require.resolve('axe-core/axe.min.js'), 'utf-8')
@@ -24,6 +26,7 @@ const pages = globSync(`${dist}/**/*.html`)
         .replace(/(^|\/)index\.html$/, '$1')
         .replace(/\.html$/, '')
   )
+  .filter(path => !prefixes.length || prefixes.some(prefix => path.startsWith(prefix)))
   .sort()
 
 // pnpm exec를 거치면 kill이 vitepress까지 닿지 않으므로 node로 바로 띄운다

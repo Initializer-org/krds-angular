@@ -93,5 +93,10 @@ const api = computed(() => data[props.name])
         </tbody>
       </table>
     </template>
+
+    <template v-if="api.types">
+      <h3>타입</h3>
+      <div v-html="api.types"></div>
+    </template>
   </template>
 </template>

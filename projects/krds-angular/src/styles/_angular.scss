@@ -28,3 +28,42 @@
 ) {
   display: block;
 }
+
+/**
+ * KRDS reset은 box-sizing: border-box를 기본 요소(div, span 등)에만 준다. 컴포넌트 요소는 그 목록에 없어 content-box가 되므로,
+ * 패딩·테두리가 있는 KRDS 클래스(.krds-file-upload.line, .form-spinner 안의 스피너 등)가 붙으면 부모 밖으로 넘친다.
+ * 컴포넌트 요소를 추가하면 여기에도 넣는다
+ */
+:where(
+  krds-accordion-item,
+  krds-carousel,
+  krds-checkbox,
+  krds-coach-mark,
+  krds-contextual-help,
+  krds-critical-alerts,
+  krds-date-input,
+  krds-disclosure,
+  krds-file-upload,
+  krds-floating-button,
+  krds-form-group,
+  krds-in-page-navigation,
+  krds-language-switcher,
+  krds-main-menu,
+  krds-modal,
+  krds-panel,
+  krds-quantity-toggle,
+  krds-radio,
+  krds-range-slider,
+  krds-resize,
+  krds-snackbar,
+  krds-spinner,
+  krds-table,
+  krds-tabs,
+  krds-tag,
+  krds-textarea,
+  krds-toast,
+  krds-toggle-switch,
+  krds-tooltip
+) {
+  box-sizing: border-box;
+}

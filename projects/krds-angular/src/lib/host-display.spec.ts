@@ -61,8 +61,8 @@ import { KrdsTooltip } from './tooltip/tooltip'
 })
 class Host {}
 
-describe('컴포넌트 요소의 display', () => {
-  it('KRDS 마크업의 바깥 틀이 되는 컴포넌트 요소는 inline이 아니다 (원본의 div처럼)', async () => {
+describe('컴포넌트 요소의 display·box-sizing', () => {
+  it('KRDS 마크업의 바깥 틀이 되는 컴포넌트 요소는 원본의 div처럼 inline이 아니고 border-box다', async () => {
     const { el } = await render(
       Host,
       `
@@ -98,5 +98,13 @@ describe('컴포넌트 요소의 display', () => {
     expect(inline).toEqual([])
     // KRDS 클래스가 display를 정하면 그쪽을 따른다
     expect(getComputedStyle(el.querySelector('krds-form-group')!).display).toBe('flex')
+
+    // 원본의 div처럼 border-box: 패딩·테두리가 있어도 부모 폭을 넘지 않는다
+    const contentBox = [...el.querySelectorAll('*')]
+      .filter(node => node.tagName.startsWith('KRDS-') && getComputedStyle(node).boxSizing !== 'border-box')
+      .map(node => node.tagName.toLowerCase())
+    expect(contentBox).toEqual([])
+    const upload = el.querySelector('krds-file-upload')!
+    expect(upload.getBoundingClientRect().width).toBeLessThanOrEqual(el.getBoundingClientRect().width)
   })
 })

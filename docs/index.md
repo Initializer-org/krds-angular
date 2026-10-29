@@ -26,3 +26,9 @@ features:
   - title: 접근성 자동 검사
     details: 모든 컴포넌트를 실제 브라우저(Chromium)에서 KRDS 스타일을 넣고 axe-core로 검사합니다. 고대비 모드를 지원합니다.
 ---
+
+## 컴포넌트 미리보기
+
+공공 서비스 화면을 KRDS Angular 컴포넌트로 조합한 예시입니다. 직접 입력하고 선택해 보세요. 상단 화면 모드 버튼으로 "선명하게 (어두운 배경)" 모드도 확인할 수 있습니다.
+
+<AngularDemo name="home/Showcase" />

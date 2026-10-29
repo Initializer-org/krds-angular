@@ -1,3 +1,4 @@
+import { page } from 'vitest/browser'
 import { Component } from '@angular/core'
 import { classesOf, expectNoA11yViolations, render } from '../../test/render'
 import { KrdsTag, KrdsTagGroup } from './tag'
@@ -13,8 +14,10 @@ describe('KrdsTag', () => {
     const { host, $ } = await render(Host, '<div krdsTagGroup><krds-tag (remove)="removed.push($event)">정책</krds-tag></div>')
     const tag = $('krds-tag')
     expect([...tag.classList]).toEqual(['krds-btn-tag'])
-    expect(tag.firstChild?.textContent).toBe('정책')
+    expect(tag.firstElementChild?.textContent).toBe('정책')
     expect($('button.btn-delete .sr-only').textContent).toBe('삭제')
+    // 어느 태그를 지우는지 알 수 있게 "정책 삭제"로 읽힌다
+    expect(page.getByRole('button', { name: '정책 삭제' }).query()).toBe($('button.btn-delete'))
 
     $('button.btn-delete').click()
     expect(host.removed).toHaveLength(1)

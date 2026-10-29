@@ -73,6 +73,8 @@ export default defineLoader({
     }
 
     const apis: Record<string, ComponentApi> = {}
+    /** hostDirectives로 밖에 연 입력 ([클래스, 디렉티브, 'name' 또는 'name: alias']) */
+    const hostInputs: [string, string, string][] = []
     /** 내보내는 interface·type 선언 (값 목록 유니온은 표에서 펼치므로 뺀다) */
     const declarations = new Map<string, string>()
     for (const file of sources) {
@@ -141,7 +143,26 @@ export default defineLoader({
           })
         }
         apis[statement.name.text] = api
+        // hostDirectives: [{ directive: KrdsDropdown, inputs: ['position: dropPosition'] }]
+        const hostDirectives = options?.properties.find(
+          (property): property is ts.PropertyAssignment => ts.isPropertyAssignment(property) && property.name.getText() === 'hostDirectives'
+        )?.initializer
+        for (const entry of hostDirectives && ts.isArrayLiteralExpression(hostDirectives) ? hostDirectives.elements : []) {
+          if (!ts.isObjectLiteralExpression(entry)) continue
+          const props = Object.fromEntries(
+            entry.properties.filter(ts.isPropertyAssignment).map(property => [property.name.getText(), property.initializer])
+          )
+          const inputs = props['inputs']
+          if (!inputs || !ts.isArrayLiteralExpression(inputs)) continue
+          for (const mapping of inputs.elements.filter(ts.isStringLiteralLike))
+            hostInputs.push([statement.name.text, props['directive'].getText(), mapping.text])
+        }
       }
+    }
+    for (const [target, directive, mapping] of hostInputs) {
+      const [name, alias = name] = mapping.split(':').map(part => part.trim())
+      const input = apis[directive]?.inputs.find(candidate => candidate.name === name)
+      if (input && !apis[target].inputs.some(candidate => candidate.name === alias)) apis[target].inputs.push({ ...input, name: alias })
     }
 
     const config: SiteConfig = (globalThis as { VITEPRESS_CONFIG?: SiteConfig }).VITEPRESS_CONFIG!

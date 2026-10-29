@@ -38,10 +38,13 @@ describe('KrdsCoachMark', () => {
     await press('다음으로')
     expect(host.current()).toBe(2)
     expect(buttons()).toEqual(['그만보기', '이전으로', '다음으로'])
+    // 누른 버튼이 든 말풍선이 사라지므로 새 단계의 제목으로 초점을 옮긴다
+    await vi.waitFor(() => expect(document.activeElement?.textContent).toBe('2단계 : 신청하기'))
     await press('다음으로')
     expect(buttons()).toEqual(['그만보기', '이전으로'])
     await press('이전으로')
     expect(host.current()).toBe(2)
+    await vi.waitFor(() => expect(document.activeElement?.textContent).toBe('2단계 : 신청하기'))
     await expectNoA11yViolations(el)
 
     await press('그만보기')

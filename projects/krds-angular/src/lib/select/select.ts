@@ -1,8 +1,8 @@
 import { Directive, booleanAttribute, computed, input } from '@angular/core'
 import { KrdsControl } from '../control/control'
 
-/** 셀렉트 크기 (KRDS 실제 규격) */
-export type KrdsSelectSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
+/** 셀렉트 크기 (KRDS 셀렉트 스타일에 있는 small·medium·large) */
+export type KrdsSelectSize = 'small' | 'medium' | 'large'
 
 /** 셀렉트 입력 상태 */
 export type KrdsSelectState = 'default' | 'error' | 'success' | 'information'

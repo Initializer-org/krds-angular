@@ -53,6 +53,13 @@ describe('KrdsLanguageSwitcher', () => {
     expect(isVisible($('.drop-menu'))).toBe(false)
   })
 
+  it('버튼 글자와 아이콘 사이를 띄우고, 아이콘은 화면낭독기에서 숨긴다', async () => {
+    const { $ } = await render(Host, '<krds-language-switcher [languages]="languages">Language</krds-language-switcher>')
+    const button = $('.drop-btn')
+    expect(button.textContent).toBe(' Language ')
+    expect([...button.querySelectorAll('i')].every(icon => icon.getAttribute('aria-hidden') === 'true')).toBe(true)
+  })
+
   it('external: 언어별 누리집으로 가는 새 창 링크', async () => {
     const { $, $$ } = await render(
       Host,

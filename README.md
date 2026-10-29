@@ -7,7 +7,7 @@
 <div align="center">
 
 [![CI](https://github.com/Initializer-org/krds-angular/actions/workflows/ci.yml/badge.svg)](https://github.com/Initializer-org/krds-angular/actions/workflows/ci.yml)
-[![angular](https://img.shields.io/badge/angular-%5E22.2.0-dd0031.svg)](https://angular.dev/)
+[![angular](https://img.shields.io/badge/angular-20%20%7C%2021%20%7C%2022-dd0031.svg)](https://angular.dev/)
 [![KRDS](https://img.shields.io/badge/KRDS-v1.1.0-256ef4.svg)](https://github.com/KRDS-uiux/krds-uiux)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -59,7 +59,7 @@ import { KrdsButton } from '@krds.ui/angular'
 export class App {}
 ```
 
-Angular `^22.2.0`이 필요합니다. 번들 예산, 작성 방식, 폼, 고대비 모드는 [시작하기](https://angular.krds.initializer.org/guide/getting-started)를 참고하세요.
+Angular 20·21·22를 지원합니다(Signal Forms는 Angular 21부터). 번들 예산, 작성 방식, 폼, 고대비 모드는 [시작하기](https://angular.krds.initializer.org/guide/getting-started)를 참고하세요.
 
 ## 접근성
 

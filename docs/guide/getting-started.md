@@ -67,5 +67,5 @@ KRDS 고대비 모드는 `<html>`의 `data-krds-mode="high-contrast"`로 켭니�
 
 ## 요구사항
 
-- Angular `^22.2.0`
+- Angular 20·21·22 (`^20.0.0 || ^21.0.0 || ^22.0.0`). Signal Forms(`[formField]`)는 Angular 21부터 있습니다.
 - zone.js 없이(zoneless) 동작합니다. zone.js를 쓰는 애플리케이션에서도 그대로 쓸 수 있습니다.

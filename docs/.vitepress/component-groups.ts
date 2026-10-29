@@ -84,6 +84,13 @@ export const componentGroups: { text: string; pages: [name: string, slug: string
     ]
   },
   {
+    text: '설정',
+    pages: [
+      ['언어 변경 Language switcher', 'language-switcher'],
+      ['화면 크기 조정 Resize', 'resize']
+    ]
+  },
+  {
     text: '부가 컴포넌트',
     pages: [['폼 그룹 Form group', 'form-group']]
   }

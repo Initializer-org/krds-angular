@@ -1,10 +1,13 @@
-# 시작하기
+---
+title: KRDS Angular 설치와 시작하기
+description: '@krds.ui/angular 설치, Angular 20·21·22 요구사항, 스타일 설정, standalone 컴포넌트와 폼 연동 방법을 안내합니다.'
+---
+
+# KRDS Angular 설치와 시작하기
 
 KRDS Angular는 [KRDS(대한민국 정부 디자인 시스템)](https://www.krds.go.kr/html/site/index.html)를 Angular로 구현한 컴포넌트 라이브러리입니다. [KRDS Vue](https://krds.initializer.org)와 같은 KRDS 스타일을 씁니다.
 
-::: warning 배포 전
-아직 npm에 배포하지 않았습니다. 저장소에서 `pnpm build`로 빌드해 씁니다.
-:::
+Initializer Team이 유지보수하는 커뮤니티 라이브러리이며, 정부가 배포하는 공식 Angular 패키지는 아닙니다. npm의 [`@krds.ui/angular`](https://www.npmjs.com/package/@krds.ui/angular) 패키지로 설치합니다.
 
 ## 설치
 
@@ -69,3 +72,5 @@ KRDS 고대비 모드는 `<html>`의 `data-krds-mode="high-contrast"`로 켭니�
 
 - Angular 20·21·22 (`^20.0.0 || ^21.0.0 || ^22.0.0`). Signal Forms(`[formField]`)는 Angular 21부터 있습니다.
 - zone.js 없이(zoneless) 동작합니다. zone.js를 쓰는 애플리케이션에서도 그대로 쓸 수 있습니다.
+
+패키지 선택, 폼 연동, 접근성 검증 범위는 [자주 묻는 질문](/guide/faq)에서 확인할 수 있습니다.

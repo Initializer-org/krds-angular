@@ -2,6 +2,7 @@
 layout: home
 title: KRDS Angular
 titleTemplate: 대한민국 정부 디자인 시스템 Angular 컴포넌트 라이브러리
+description: 'Initializer Team의 @krds.ui/angular 문서입니다. Angular 20·21·22에서 쓰는 KRDS 컴포넌트의 설치, standalone 사용법, 폼 연동과 API를 안내합니다.'
 
 hero:
   name: KRDS Angular
@@ -26,6 +27,12 @@ features:
   - title: 접근성 자동 검사
     details: 모든 컴포넌트를 실제 브라우저(Chromium)에서 KRDS 스타일을 넣고 axe-core로 검사합니다. 고대비 모드를 지원합니다.
 ---
+
+## KRDS Angular는 무엇인가요? {#about}
+
+KRDS Angular(`@krds.ui/angular`)는 대한민국 정부 디자인 시스템의 마크업과 스타일을 Angular로 구현한 커뮤니티 라이브러리입니다. Initializer Team이 유지보수하며, 정부가 배포하는 공식 Angular 패키지는 아닙니다. Angular 20·21·22를 지원하고 MIT 라이선스로 배포됩니다.
+
+[설치와 스타일 설정](/guide/getting-started), [컴포넌트별 예제와 API](/components/), [자주 묻는 질문](/guide/faq)에서 적용 방법을 확인하세요.
 
 ## 컴포넌트 미리보기
 

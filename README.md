@@ -33,7 +33,7 @@
 - **접근성 자동 검사.** 모든 컴포넌트 테스트와 문서 예제가 실제 브라우저에서 axe-core 접근성 검사를 실행하고, 위반이 있으면 CI가 실패합니다. 고대비 모드를 지원합니다.
 - **Angular 방식 그대로.** standalone 컴포넌트·디렉티브와 signal 입력으로 만들었고 zoneless로 동작합니다. 폼은 기본 입력 요소에 디렉티브를 붙이는 방식이라 `[(ngModel)]`, reactive forms, Signal Forms가 그대로 동작합니다.
 
-> 초기 개발 단계입니다. 아직 npm에 배포하지 않았습니다.
+> 초기 개발 단계입니다. npm의 [`@krds.ui/angular`](https://www.npmjs.com/package/@krds.ui/angular) 패키지로 설치할 수 있습니다.
 
 ## 빠른 시작
 

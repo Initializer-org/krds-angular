@@ -14,8 +14,8 @@ jobs:
     name: Release Please
     runs-on: ubuntu-latest
     outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
+      # 패키지 경로가 루트(.)가 아니면 release_created는 'projects/krds-angular--release_created'로만 나온다
+      release_created: ${{ steps.release.outputs.releases_created }}
     steps:
       - name: Run release-please
         id: release

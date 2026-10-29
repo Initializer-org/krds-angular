@@ -1,6 +1,6 @@
 # 폼 그룹 Form group
 
-`<krds-form-group>`은 입력 요소 하나와 그 레이블·도움말을 묶는 `.form-group` 영역입니다. 안에 넣은 입력 요소(`krdsInput`·`krdsSelect`·`krdsControl`)에 레이블과 도움말을 자동으로 연결합니다. 텍스트 입력 필드, 텍스트 영역, 셀렉트, 날짜 입력 필드 등과 함께 씁니다.
+`<krds-form-group>`은 입력 요소 하나와 그 레이블·도움말을 묶는 `.form-group` 영역입니다. 안에 넣은 입력 요소(`krdsInput`·`krdsSelect`·`krdsControl`)에 레이블과 도움말을 자동으로 연결합니다. [텍스트 입력 필드](/components/input), [텍스트 영역](/components/textarea), [셀렉트](/components/select), [날짜 입력 필드](/components/date-input) 등과 함께 씁니다.
 
 ## 기본
 
@@ -13,7 +13,7 @@
 <<< ./demos/form-group/Basic.ts
 
 ::: tip
-폼 그룹은 입력 요소 하나를 위한 묶음입니다. 체크박스·라디오 여러 개는 `<fieldset krdsCheckArea>`와 `<legend>`로 묶습니다.
+폼 그룹은 입력 요소 하나를 위한 묶음입니다. [체크박스](/components/checkbox)·[라디오 버튼](/components/radio) 여러 개는 `<fieldset krdsCheckArea>`와 `<legend>`로 묶습니다.
 :::
 
 ## 도움말 유형

@@ -4,7 +4,7 @@
 
 ## 기본
 
-`[(value)]`로 수량(`number`)을 연결하고 `label`로 어떤 수량인지 안내합니다. Signal Forms를 쓰면 `[formField]`로도 연결됩니다. 최솟값(`min`, 기본 0)이나 최댓값(`max`, 기본 10)에 닿으면 해당 버튼이 비활성화됩니다. KRDS 가이드에 따라 선택 범위는 기준값을 포함해 11단계 이내로 정하고, 그보다 넓으면 텍스트 입력 필드를 씁니다.
+`[(value)]`로 수량(`number`)을 연결하고 `label`로 어떤 수량인지 안내합니다. Signal Forms를 쓰면 `[formField]`로도 연결됩니다. 최솟값(`min`, 기본 0)이나 최댓값(`max`, 기본 10)에 닿으면 해당 버튼이 비활성화됩니다. KRDS 가이드에 따라 선택 범위는 기준값을 포함해 11단계 이내로 정하고, 그보다 넓으면 [텍스트 입력 필드](/components/input)를 씁니다.
 
 <div class="demo vp-raw"><AngularDemo name="quantity-toggle/Basic" /></div>
 

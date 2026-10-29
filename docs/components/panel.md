@@ -14,7 +14,7 @@
 
 ## 도움 패널
 
-패널 안에 `<krds-tabs>`를 넣고, 탭마다 `<ng-template krdsTabPanel="탭 id">`로 도움 탭과 따라하기 탭의 내용을 넣습니다.
+패널 안에 [탭](/components/tabs)(`<krds-tabs>`)을 넣고, 탭마다 `<ng-template krdsTabPanel="탭 id">`로 도움 탭과 따라하기 탭의 내용을 넣습니다.
 
 <DemoFrame src="/frame/panel/help" title="도움 패널 예제" :height="560" :width="1024" />
 

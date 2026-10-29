@@ -6,7 +6,7 @@
 
 ## 기본
 
-기본 `<header>`(banner 랜드마크)에 `krdsHeader`를 붙이고, 안에 넣은 요소를 KRDS 헤더 구조로 배치합니다. `krdsHeaderUtility`를 붙인 요소에는 유틸리티 메뉴를, `krdsHeaderBranding`을 붙인 요소에는 로고와 주요 버튼을 KRDS 헤더 마크업 그대로 넣습니다. PC 메인 메뉴(`<krds-main-menu>`)는 그냥 넣고, 모바일 드로어(`<krds-main-menu variant="mobile">`)에는 `krdsHeaderMobile` 속성을 붙입니다. 유틸리티 메뉴의 드롭다운은 `krdsDropdown`을 KRDS 드롭다운 마크업에 붙여 엽니다(언어 변경 문서의 드롭다운 참고).
+기본 `<header>`(banner 랜드마크)에 `krdsHeader`를 붙이고, 안에 넣은 요소를 KRDS 헤더 구조로 배치합니다. `krdsHeaderUtility`를 붙인 요소에는 유틸리티 메뉴를, `krdsHeaderBranding`을 붙인 요소에는 로고와 주요 버튼을 KRDS 헤더 마크업 그대로 넣습니다. PC [메인 메뉴](/components/main-menu)(`<krds-main-menu>`)는 그냥 넣고, 모바일 드로어(`<krds-main-menu variant="mobile">`)에는 `krdsHeaderMobile` 속성을 붙입니다. 유틸리티 메뉴의 드롭다운은 `krdsDropdown`을 KRDS 드롭다운 마크업에 붙여 엽니다([언어 변경 문서의 드롭다운](/components/language-switcher#드롭다운) 참고).
 
 헤더는 화면 상단에 고정(sticky)되고 메인 메뉴를 열면 화면 전체에 배경 딤이 깔리므로 예제를 별도 화면(iframe)에 띄웁니다. 예제는 1024px 폭 화면을 축소해 PC 레이아웃으로 보여 줍니다.
 

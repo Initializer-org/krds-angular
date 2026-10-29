@@ -4,6 +4,15 @@
  */
 export const componentGroups: { text: string; pages: [name: string, slug: string][] }[] = [
   {
+    text: '아이덴티티',
+    pages: [
+      ['공식 배너 Masthead', 'masthead'],
+      ['운영기관 식별자 Identifier', 'identifier'],
+      ['헤더 Header', 'header'],
+      ['푸터 Footer', 'footer']
+    ]
+  },
+  {
     text: '탐색',
     pages: [
       ['건너뛰기 링크 Skip link', 'skip-link'],

@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue'
+
+// 정적 404의 noindex를 인계받고, SPA로 정상 문서에 돌아가면 제거한다.
+let robots: HTMLMetaElement | undefined
+onMounted(() => {
+  robots = document.head.querySelector<HTMLMetaElement>('meta[name="robots"]') ?? document.createElement('meta')
+  robots.name = 'robots'
+  robots.content = 'noindex, follow'
+  document.head.appendChild(robots)
+})
+onUnmounted(() => robots?.remove())
+</script>
+
 <template>
   <div class="not-found">
     <p class="not-found-code">404</p>

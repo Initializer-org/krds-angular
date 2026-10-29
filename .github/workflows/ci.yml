@@ -47,5 +47,8 @@ jobs:
       - name: Build docs
         run: pnpm docs:build
 
+      - name: Check docs SEO
+        run: pnpm docs:seo
+
       - name: Check docs examples (렌더링 + a11y)
         run: pnpm docs:test

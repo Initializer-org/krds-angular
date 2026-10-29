@@ -13,7 +13,8 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "docs:check": "ngc -p docs/tsconfig.json --noEmit",
-    "docs:test": "node scripts/check-docs.mjs"
+    "docs:test": "node scripts/check-docs.mjs",
+    "docs:seo": "node scripts/check-docs-seo.mjs"
   },
   "engines": {
     "node": ">=20.19.0",

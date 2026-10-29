@@ -20,6 +20,19 @@ export const componentGroups: { text: string; pages: [name: string, slug: string
       ['태그 Tag', 'tag'],
       ['토글 스위치 Toggle switch', 'toggle-switch']
     ]
+  },
+  {
+    text: '입력',
+    pages: [
+      ['날짜 입력 필드 Date input', 'date-input'],
+      ['텍스트 영역 Textarea', 'textarea'],
+      ['텍스트 입력 필드 Text input', 'input'],
+      ['파일 업로드 File upload', 'file-upload']
+    ]
+  },
+  {
+    text: '부가 컴포넌트',
+    pages: [['폼 그룹 Form group', 'form-group']]
   }
 ]
 

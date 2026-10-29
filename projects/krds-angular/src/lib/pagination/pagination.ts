@@ -4,7 +4,8 @@ type PageItem = { type: 'page'; page: number } | { type: 'ellipsis'; key: string
 
 /**
  * KRDS 페이지네이션. 현재 페이지는 `[(page)]`로 주고받는다. 처음·끝 페이지는 늘 보이고, 나머지는 현재 페이지 주변 pageRange개만 보이며 그 밖은 생략(…)으로 줄인다.
- * 링크를 눌러도 주소는 바뀌지 않는다 (기본 동작을 막고 page만 바꿈)
+ * 링크를 눌러도 주소는 바뀌지 않는다 (기본 동작을 막고 page만 바꿈).
+ * 첫·끝 페이지의 이전·다음은 비활성 링크(href 없이 aria-disabled)로 남겨, 화면낭독기가 "이전, 링크, 사용 불가"로 읽는다
  *
  * @example <nav krdsPagination [max]="20" [(page)]="page"></nav>
  */
@@ -16,7 +17,7 @@ type PageItem = { type: 'page'; page: number } | { type: 'ellipsis'; key: string
   },
   template: `
     @if (current() <= minPage()) {
-      <span class="page-navi prev disabled">이전</span>
+      <a class="page-navi prev disabled" role="link" aria-disabled="true">이전</a>
     } @else {
       <a href="#" class="page-navi prev" (click)="go($event, current() - 1)">이전</a>
     }
@@ -41,7 +42,7 @@ type PageItem = { type: 'page'; page: number } | { type: 'ellipsis'; key: string
       }
     </div>
     @if (current() >= max()) {
-      <span class="page-navi next disabled">다음</span>
+      <a class="page-navi next disabled" role="link" aria-disabled="true">다음</a>
     } @else {
       <a href="#" class="page-navi next" (click)="go($event, current() + 1)">다음</a>
     }

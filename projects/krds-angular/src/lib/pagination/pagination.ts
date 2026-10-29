@@ -64,26 +64,22 @@ export class KrdsPagination {
   protected readonly current = computed(() => this.page() ?? this.minPage())
 
   protected readonly pages = computed<PageItem[]>(() => {
-    const total = this.max()
-    const min = this.minPage()
+    const first = this.minPage()
+    const last = this.max()
     const range = this.pageRange()
     const pageItems = (from: number, to: number) =>
       Array.from({ length: Math.max(to - from + 1, 0) }, (_, i): PageItem => ({ type: 'page', page: from + i }))
-    // 처음·끝 경계 1페이지와 가운데 range개를 모두 보일 수 있으면 생략하지 않는다
-    if (total <= range + 2) return pageItems(min, total)
+    // 처음·끝 페이지와 가운데 range개를 모두 보일 수 있으면 생략하지 않는다
+    if (last - first + 1 <= range + 2) return pageItems(first, last)
 
-    const left = Math.min(1, total)
-    const right = Math.max(total, 1)
-    const rangeEnd = Math.min(total, Math.max(min, this.current() - Math.floor(range / 2)) + range - 1)
-    const rangeStart = Math.max(min, rangeEnd - range + 1)
-    const start = Math.max(rangeStart, left + 1)
-    const end = Math.min(rangeEnd, right - 1)
+    const rangeEnd = Math.min(last, Math.max(first, this.current() - Math.floor(range / 2)) + range - 1)
+    const rangeStart = Math.max(first, rangeEnd - range + 1)
     return [
-      ...pageItems(min, left),
-      ...(rangeStart > left + 1 ? [{ type: 'ellipsis', key: 'left' } as const] : []),
-      ...pageItems(start, end),
-      ...(rangeEnd < right - 1 ? [{ type: 'ellipsis', key: 'right' } as const] : []),
-      ...pageItems(right, total)
+      ...pageItems(first, first),
+      ...(rangeStart > first + 1 ? [{ type: 'ellipsis', key: 'left' } as const] : []),
+      ...pageItems(Math.max(rangeStart, first + 1), Math.min(rangeEnd, last - 1)),
+      ...(rangeEnd < last - 1 ? [{ type: 'ellipsis', key: 'right' } as const] : []),
+      ...pageItems(last, last)
     ]
   })
 

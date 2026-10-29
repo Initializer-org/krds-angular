@@ -295,6 +295,9 @@ describe('KrdsMainMenu (모바일)', () => {
     await vi.waitFor(() => expect(document.activeElement).toBe(prev))
     expect(depth4Wrap.classList).toContain('is-open')
     expect(depth4Trigger.getAttribute('aria-expanded')).toBe('true')
+    // 4단계 제목은 2단계 패널 제목(h2) 바로 아래 수준
+    expect(depth4Wrap.querySelector('.sub-title')?.tagName).toBe('H3')
+    await expectNoA11yViolations(drawer)
     await user.keyboard('{Shift>}{Tab}{/Shift}')
     expect(document.activeElement).toBe(byText(depth4Wrap, 'a', '온라인 과정'))
     await user.keyboard('{Tab}')

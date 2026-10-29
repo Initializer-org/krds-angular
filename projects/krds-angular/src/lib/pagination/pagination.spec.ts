@@ -48,6 +48,20 @@ describe('KrdsPagination', () => {
     expect(pages(el)).toEqual(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'])
   })
 
+  it('첫 페이지(min)가 1이 아니면 그 페이지부터 세고, 앞에 숨긴 페이지가 없으면 생략하지 않는다', async () => {
+    const { host, el, stable } = await render(Host, '<nav krdsPagination [min]="3" [max]="max()" [(page)]="page"></nav>')
+    host.page.set(3)
+    await stable()
+    expect(pages(el)).toEqual(['3', '4', '5', '6', '7', '8', '9', '10', '…', '20'])
+    host.page.set(12)
+    await stable()
+    expect(pages(el)).toEqual(['3', '…', '8', '9', '10', '11', '12', '13', '14', '15', '…', '20'])
+    // 남은 페이지가 처음·끝과 가운데 범위에 모두 들어가면 생략 없음
+    host.max.set(12)
+    await stable()
+    expect(pages(el)).toEqual(['3', '4', '5', '6', '7', '8', '9', '10', '11', '12'])
+  })
+
   it('이전·다음·페이지 링크로 이동하고, 주소(#)는 바뀌지 않는다', async () => {
     const { host, el, $, click } = await render(Host, '<nav krdsPagination [max]="max()" [(page)]="page"></nav>')
     const hash = location.hash

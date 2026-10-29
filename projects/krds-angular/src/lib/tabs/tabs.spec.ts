@@ -50,6 +50,15 @@ describe('KrdsTabs', () => {
     expect(document.activeElement).toBe(tabs[0])
     await user.keyboard('{ArrowRight}')
     expect(document.activeElement).toBe(tabs[1])
+    // 비활성 탭(문의)은 건너뛰고 끝에서 처음으로, 처음에서 끝으로 돌아간다
+    await user.keyboard('{ArrowRight}')
+    expect(document.activeElement).toBe(tabs[0])
+    await user.keyboard('{ArrowLeft}')
+    expect(document.activeElement).toBe(tabs[1])
+    await user.keyboard('{Home}')
+    expect(document.activeElement).toBe(tabs[0])
+    await user.keyboard('{End}')
+    expect(document.activeElement).toBe(tabs[1])
   })
 
   it('비활성 탭은 눌러도 바뀌지 않고, 바깥에서 고른 탭을 반영한다', async () => {

@@ -22,7 +22,7 @@ const SCALES: { key: KrdsResizeScale; label: string; zoom: string }[] = [
   hostDirectives: [KrdsDropdown],
   host: { class: 'krds-resize', 'data-adjust': 'scale' },
   template: `
-    <button type="button" class="krds-btn small text drop-btn">화면크기 <i class="svg-icon ico-toggle"></i></button>
+    <button type="button" class="krds-btn small text drop-btn">화면크기 <i class="svg-icon ico-toggle" aria-hidden="true"></i></button>
     <div class="drop-menu">
       <div class="drop-in">
         <ul class="drop-list">
@@ -44,7 +44,7 @@ const SCALES: { key: KrdsResizeScale; label: string; zoom: string }[] = [
         </ul>
         <div class="drop-bottom">
           <button type="button" class="krds-btn medium text" data-adjust-scale="md" (click)="select('md')">
-            <i class="svg-icon ico-reset"></i> 초기화
+            <i class="svg-icon ico-reset" aria-hidden="true"></i> 초기화
           </button>
         </div>
       </div>

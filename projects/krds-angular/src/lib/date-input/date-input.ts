@@ -91,7 +91,7 @@ const openCalendars = new Set<() => void>()
                   type="button"
                   class="btn-cal-switch"
                   [class]="type"
-                  [attr.aria-label]="type === 'year' ? '연도 선택' : '월 선택'"
+                  [attr.aria-label]="format(type, current(type)) + (type === 'year' ? ' 연도 선택' : ' 월 선택')"
                   [attr.aria-expanded]="dropdown() === type"
                   (click)="dropdown.set(dropdown() === type ? null : type)"
                 >

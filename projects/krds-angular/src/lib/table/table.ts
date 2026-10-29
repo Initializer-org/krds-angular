@@ -47,22 +47,36 @@ export interface KrdsTableRowClick<T = object> {
   index: number
 }
 
-/** 열 이름별 셀 템플릿 (`<ng-template krdsCell="status" let-row let-value="value">`) */
+/**
+ * 열 이름별 셀 템플릿 (`<ng-template krdsCell="status" let-row let-value="value">`).
+ * `[krdsCellOf]="rows"`를 주면 템플릿의 row가 행 타입이 된다 (strictTemplates에서 row.title 같은 접근을 검사)
+ */
 @Directive({ selector: 'ng-template[krdsCell]' })
-export class KrdsTableCell {
+export class KrdsTableCell<T extends object = object> {
   readonly name = input.required<string>({ alias: 'krdsCell' })
-  readonly template = inject<TemplateRef<KrdsTableCellContext>>(TemplateRef)
+  /** 행 목록 (템플릿의 row 타입을 정하는 데만 씀) */
+  readonly rows = input<readonly T[]>(undefined, { alias: 'krdsCellOf' })
+  readonly template = inject<TemplateRef<KrdsTableCellContext<T>>>(TemplateRef)
 
-  static ngTemplateContextGuard(_dir: KrdsTableCell, _ctx: unknown): _ctx is KrdsTableCellContext {
+  static ngTemplateContextGuard<T extends object>(_dir: KrdsTableCell<T>, _ctx: unknown): _ctx is KrdsTableCellContext<T> {
     return true
   }
+}
+
+/** 머리글 템플릿 컨텍스트 */
+export interface KrdsTableHeaderContext {
+  $implicit: KrdsTableColumn
 }
 
 /** 열 이름별 머리글 템플릿 (`<ng-template krdsHeader="status" let-column>`) */
 @Directive({ selector: 'ng-template[krdsHeader]' })
 export class KrdsTableHeader {
   readonly name = input.required<string>({ alias: 'krdsHeader' })
-  readonly template = inject<TemplateRef<{ $implicit: KrdsTableColumn }>>(TemplateRef)
+  readonly template = inject<TemplateRef<KrdsTableHeaderContext>>(TemplateRef)
+
+  static ngTemplateContextGuard(_dir: KrdsTableHeader, _ctx: unknown): _ctx is KrdsTableHeaderContext {
+    return true
+  }
 }
 
 /** 행이 없을 때 보여 줄 내용 (`<ng-template krdsNoData>`) */

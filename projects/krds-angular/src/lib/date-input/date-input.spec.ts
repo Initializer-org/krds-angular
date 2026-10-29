@@ -89,6 +89,11 @@ describe('KrdsDateInput', () => {
     // 연/월 목록은 하나만 열리고, Esc는 목록만 닫고 초점을 연/월 버튼으로
     const yearButton = $('.btn-cal-switch.year')
     const monthButton = $('.btn-cal-switch.month')
+    // 이름이 보이는 글자로 시작한다 (음성 명령으로 "2026년"을 말해도 누를 수 있게, axe label-content-name-mismatch)
+    for (const button of [yearButton, monthButton]) {
+      expect(button.getAttribute('aria-label')?.startsWith(button.textContent!.trim())).toBe(true)
+    }
+    expect(yearButton.getAttribute('aria-label')).toMatch(/^\d{4}년 연도 선택$/)
     await click(yearButton)
     expect(yearButton.getAttribute('aria-expanded')).toBe('true')
     await click(monthButton)

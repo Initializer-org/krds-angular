@@ -27,7 +27,7 @@ let nextId = 0
  * @example
  * <krds-contextual-help heading="신청 자격" position="bottom left">
  *   <p>만 19세 이상 국민이면 신청할 수 있습니다.</p>
- *   <div class="btn-wrap"><a krdsLink size="xsmall" basic href="/guide">바로가기</a></div>
+ *   <div class="btn-wrap"><a class="krds-btn xsmall link basic" href="/guide">바로가기</a></div>
  * </krds-contextual-help>
  */
 @Component({

@@ -98,23 +98,22 @@ interface Notice {
         [columns]="columns"
         [rows]="rows()"
       >
-        <ng-template krdsCell="select" let-row>
-          @let notice = asNotice(row);
+        <ng-template krdsCell="select" [krdsCellOf]="rows()" let-row>
           <krds-checkbox>
             <input
               type="checkbox"
               krdsControl
-              [id]="'table-type-chk-' + notice.id"
-              [ngModel]="selected().includes(notice.id)"
-              (ngModelChange)="toggleRow(notice.id, $event)"
+              [id]="'table-type-chk-' + row.id"
+              [ngModel]="selected().includes(row.id)"
+              (ngModelChange)="toggleRow(row.id, $event)"
             />
-            <span class="sr-only">{{ notice.title }} 선택</span>
+            <span class="sr-only">{{ row.title }} 선택</span>
           </krds-checkbox>
         </ng-template>
         <ng-template krdsHeader="download"><span class="sr-only">다운로드</span></ng-template>
-        <ng-template krdsCell="download" let-row>
+        <ng-template krdsCell="download" [krdsCellOf]="rows()" let-row>
           <button krdsButton text size="medium">
-            <i class="svg-icon ico-down" aria-hidden="true"></i> 다운로드<span class="sr-only">: {{ asNotice(row).title }}</span>
+            <i class="svg-icon ico-down" aria-hidden="true"></i> 다운로드<span class="sr-only">: {{ row.title }}</span>
           </button>
         </ng-template>
       </krds-table>
@@ -214,11 +213,6 @@ export default class StructuredListTableType {
   readonly rows = computed(() => this.sorted().slice((this.page() - 1) * this.size(), this.page() * this.size()))
   // 전체선택은 지금 페이지의 행 기준
   readonly allChecked = computed(() => this.rows().every(row => this.selected().includes(row.id)))
-
-  // 셀 템플릿의 행은 object 타입으로 들어온다
-  asNotice(row: object) {
-    return row as Notice
-  }
 
   // 정렬 기준을 바꾸면 첫 페이지로
   setSort(value: string) {

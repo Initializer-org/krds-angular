@@ -35,10 +35,9 @@ export class KrdsLanguageTop {}
   hostDirectives: [{ directive: KrdsDropdown, inputs: ['position: dropPosition'] }],
   host: { class: 'krds-language' },
   template: `
+    <!-- 공백만 있는 글자는 템플릿에서 지워지므로 &ngsp;로 아이콘과 내용 사이를 띄운다 -->
     <button type="button" class="krds-btn small text drop-btn">
-      <i class="svg-icon ico-global"></i>
-      <ng-content />
-      <i class="svg-icon ico-toggle"></i>
+      <i class="svg-icon ico-global" aria-hidden="true"></i>&ngsp;<ng-content />&ngsp;<i class="svg-icon ico-toggle" aria-hidden="true"></i>
     </button>
     <div class="drop-menu">
       <div class="drop-in">
@@ -48,7 +47,7 @@ export class KrdsLanguageTop {}
             <li>
               @if (type() === 'external') {
                 <a class="item-link" krdsExternal [href]="item.url || '#'" [lang]="item.code"
-                  >{{ item.name }} <i class="svg-icon ico-go"></i
+                  >{{ item.name }} <i class="svg-icon ico-go" aria-hidden="true"></i
                 ></a>
               } @else {
                 <!-- KRDS 원본의 aria-selected는 링크에 쓸 수 없으므로 현재 언어는 aria-current로 알린다 -->

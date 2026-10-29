@@ -8,6 +8,11 @@ class Host {
   readonly files = signal<KrdsFileInfo[]>([])
   readonly events: string[] = []
   readonly errors: KrdsFileError[] = []
+
+  /** 파일을 받자마자 업로드를 시작한 것처럼 상태를 바꾼다 */
+  startUpload(file: KrdsFileInfo) {
+    this.files.update(files => files.map(item => (item.id === file.id ? { ...item, status: 'uploading' } : item)))
+  }
 }
 
 const makeFile = (name: string, size = 1024, type = 'application/pdf') => new File([new Uint8Array(size)], name, { type })
@@ -167,6 +172,22 @@ describe('KrdsFileUpload', () => {
     expect(buttonByText('삭제')).toBeUndefined()
     expect(buttonByText('전체 파일 삭제')).toBeUndefined()
     expect(buttonByText('다운로드')).toBeTruthy()
+  })
+
+  it('fileAdded 처리기에서 바꾼 목록이 남는다 (목록에 넣은 뒤 알림)', async () => {
+    const { host, $, stable } = await render(Host, '<krds-file-upload [(files)]="files" (fileAdded)="startUpload($event)" />')
+    const input = $<HTMLInputElement>('input[type="file"]')
+    input.files = transfer([makeFile('신청서.pdf')]).files
+    input.dispatchEvent(new Event('change', { bubbles: true }))
+    await stable()
+    expect(host.files().map(file => file.status)).toEqual(['uploading'])
+  })
+
+  it('제목 없이 설명만 주면 빈 제목을 그리지 않는다', async () => {
+    const { el, $ } = await render(Host, '<krds-file-upload description="PDF 파일만 올릴 수 있습니다" />')
+    expect($('.file-head p').textContent).toBe('PDF 파일만 올릴 수 있습니다')
+    expect(el.querySelector('.file-head h3')).toBeNull()
+    await expectNoA11yViolations(el)
   })
 
   it('접근성 위반이 없다', async () => {

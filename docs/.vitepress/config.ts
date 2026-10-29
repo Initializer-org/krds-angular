@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import angular from '@analogjs/vite-plugin-angular'
 import { defineConfig, postcssIsolateStyles } from 'vitepress'
@@ -6,6 +7,7 @@ import { componentGroups, krdsGuides } from './component-groups.ts'
 import { pageDescription } from './pages.ts'
 
 const root = resolve(import.meta.dirname, '../..')
+const { version } = JSON.parse(readFileSync(resolve(root, 'projects/krds-angular/package.json'), 'utf-8')) as { version: string }
 
 const siteUrl = 'https://angular.krds.initializer.org'
 const siteDescription =
@@ -157,7 +159,8 @@ export default defineConfig({
       // KRDS Vue · React · Angular 전환 (theme/FrameworkSwitch.vue)
       { component: 'FrameworkSwitch', props: { current: 'angular' } },
       { text: '시작하기', link: '/guide/getting-started' },
-      { text: '컴포넌트', link: '/components/' }
+      { text: '컴포넌트', link: '/components/' },
+      { text: `v${version}`, link: 'https://github.com/Initializer-org/krds-angular/blob/main/projects/krds-angular/CHANGELOG.md' }
     ],
     sidebar: [
       {
@@ -173,7 +176,10 @@ export default defineConfig({
         items: group.pages.map(([name, slug]) => ({ text: name, link: `/components/${slug}` }))
       }))
     ],
-    socialLinks: [{ icon: 'github', link: 'https://github.com/Initializer-org/krds-angular' }],
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/Initializer-org/krds-angular' },
+      { icon: 'npm', link: 'https://www.npmjs.com/package/@krds.ui/angular' }
+    ],
     editLink: {
       pattern: 'https://github.com/Initializer-org/krds-angular/edit/main/docs/:path',
       text: '이 페이지 수정하기'

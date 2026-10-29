@@ -65,6 +65,16 @@ export const componentGroups: { text: string; pages: [name: string, slug: string
     ]
   },
   {
+    text: '도움',
+    pages: [
+      ['패널 Panel', 'panel'],
+      ['맥락적 도움말 Contextual help', 'contextual-help'],
+      ['코치마크 Coach mark', 'coach-mark'],
+      ['툴팁 Tooltip', 'tooltip'],
+      ['음성 지원 TTS', 'tts']
+    ]
+  },
+  {
     text: '입력',
     pages: [
       ['날짜 입력 필드 Date input', 'date-input'],

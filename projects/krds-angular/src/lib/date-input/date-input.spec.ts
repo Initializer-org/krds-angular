@@ -118,6 +118,11 @@ describe('KrdsDateInput', () => {
     expect(caption()).toBe(`${year}년 02월`)
     expect(cell(`${year}.02.01`).classList).not.toContain('old')
     expect(cell(`${year}.03.01`).classList).toContain('new')
+    // 이전·다음 달 날짜는 고를 수 없다 (공식 krds-react와 같게)
+    const adjacent = [...el.querySelectorAll<HTMLButtonElement>('td.old button, td.new button')]
+    expect(adjacent.length).toBeGreaterThan(0)
+    expect(adjacent.every(button => button.disabled)).toBe(true)
+    expect(cell(`${year}.02.01`).querySelector('button')?.disabled).toBe(false)
 
     // 첫 클릭은 시작일, 앞 날짜를 고르면 시작일을 다시 정하고, 다음 클릭으로 기간 완성
     await pick(`${year}.02.12`)

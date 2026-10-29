@@ -46,7 +46,8 @@
   ],
   "packages": {
     "projects/krds-angular": {
-      "package-name": "@krds.ui/angular"
+      "package-name": "@krds.ui/angular",
+      "initial-version": "0.1.0"
     }
   }
 }

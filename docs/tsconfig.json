@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "paths": { "@krds.ui/angular": ["../projects/krds-angular/src/public-api.ts"] }
+  },
+  "angularCompilerOptions": { "strictTemplates": true },
+  "include": ["components/demos/**/*.ts", "../projects/krds-angular/src/lib/**/*.ts"],
+  "exclude": ["../projects/krds-angular/src/**/*.spec.ts"]
+}

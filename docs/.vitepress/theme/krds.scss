@@ -1,0 +1,5 @@
+// KRDS Angular 스타일 (라이브러리 소스). 이미지·글꼴 경로는 config.ts의 @krds-assets 별칭으로 projects/krds-angular/public을 가리킨다
+@use '../../../projects/krds-angular/src/styles/common/path' with (
+  $url: '@krds-assets'
+);
+@use '../../../projects/krds-angular/src/styles/main';

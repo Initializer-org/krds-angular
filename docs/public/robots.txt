@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /frame/
+Sitemap: https://angular.krds.initializer.org/sitemap.xml

@@ -4,6 +4,22 @@
  */
 export const componentGroups: { text: string; pages: [name: string, slug: string][] }[] = [
   {
+    text: '레이아웃 및 표현',
+    pages: [
+      ['구조화 목록 Structured list', 'structured-list'],
+      ['긴급 공지 Critical alerts', 'critical-alerts'],
+      ['디스클로저 Disclosure', 'disclosure'],
+      ['모달 Modal', 'modal'],
+      ['배지 Badge', 'badge'],
+      ['아코디언 Accordion', 'accordion'],
+      ['이미지 Image', 'image'],
+      ['캐러셀 Carousel', 'carousel'],
+      ['탭 Tab', 'tabs'],
+      ['표 Table', 'table'],
+      ['텍스트 목록 Text list', 'text-list']
+    ]
+  },
+  {
     text: '액션',
     pages: [
       ['링크 Link', 'link'],

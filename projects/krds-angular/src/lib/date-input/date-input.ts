@@ -144,6 +144,7 @@ const openCalendars = new Set<() => void>()
                         <button
                           type="button"
                           class="btn-set-date"
+                          [disabled]="!day.isCurrentMonth"
                           [attr.aria-pressed]="range(day.dateString).isInRange"
                           (click)="selectDate(day.dateString)"
                         >

@@ -7,7 +7,7 @@ description: 'Initializer Team의 @krds.ui/angular 문서입니다. Angular 20·
 hero:
   name: KRDS Angular
   text: 대한민국 정부 디자인 시스템을 Angular로
-  tagline: KRDS 원본의 마크업과 스타일을 그대로 따르는 Angular + TypeScript 컴포넌트 라이브러리
+  tagline: 민원 신청부터 본인 인증까지, 공공서비스에 필요한 화면을 KRDS 기준으로 구성하세요. 폼·내비게이션·안내 요소를 조합하고, 기존 Angular 폼의 데이터 연결과 유효성 검사를 함께 사용할 수 있습니다.
   actions:
     - theme: brand
       text: 시작하기

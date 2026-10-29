@@ -27,7 +27,7 @@
 
 ## KRDS Angular: 대한민국 정부 디자인 시스템을 Angular로
 
-[KRDS(대한민국 정부 디자인 시스템)](https://www.krds.go.kr/html/site/index.html)를 Angular + TypeScript로 구현한 컴포넌트 라이브러리입니다. 공공 웹서비스에서 반복되는 폼, 내비게이션, 레이아웃, 피드백 UI를 KRDS 원본과 같은 모습과 동작으로 제공합니다.
+Angular 프로젝트에서 민원 신청, 본인 인증, 처리 현황 같은 공공서비스 화면을 [KRDS(대한민국 정부 디자인 시스템)](https://www.krds.go.kr/html/site/index.html) 기준으로 구성할 수 있습니다. 폼·내비게이션·레이아웃을 조합하고, 기존 Angular 폼에 KRDS의 스타일과 키보드 동작을 적용하세요. 기본 입력 요소를 사용하므로 `ngModel`과 reactive forms의 데이터 연결·유효성 검사를 함께 쓸 수 있습니다.
 
 - **KRDS 원본 그대로.** KRDS 원본 v1.1.0의 마크업·클래스·키보드 동작을 따르고, [KRDS Vue](https://github.com/Initializer-org/krds-vue)와 같은 스타일을 씁니다. [공식 컴포넌트 목록](https://www.krds.go.kr/html/site/component/component_summary.html)의 분류를 모두 옮겼습니다(스플래시 스크린은 각 플랫폼의 기본 기능 영역이라 제외).
 - **접근성 자동 검사.** 모든 컴포넌트 테스트와 문서 예제가 실제 브라우저에서 axe-core 접근성 검사를 실행하고, 위반이 있으면 CI가 실패합니다. 고대비 모드를 지원합니다.

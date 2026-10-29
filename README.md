@@ -1,10 +1,39 @@
-# KRDS Angular
+<p align="center">
+  <a href="https://angular.krds.initializer.org/">
+    <img src="./.github/assets/banner.jpg" alt="KRDS Angular" />
+  </a>
+</p>
 
-[KRDS(대한민국 정부 디자인 시스템)](https://www.krds.go.kr/html/site/index.html)를 Angular로 구현한 컴포넌트 라이브러리입니다. Vue 버전인 [@krds.ui/vue](https://github.com/Initializer-org/krds-vue)와 같은 KRDS 스타일을 씁니다.
+<div align="center">
 
-문서와 예제: https://angular.krds.initializer.org
+[![CI](https://github.com/Initializer-org/krds-angular/actions/workflows/ci.yml/badge.svg)](https://github.com/Initializer-org/krds-angular/actions/workflows/ci.yml)
+[![angular](https://img.shields.io/badge/angular-%5E22.2.0-dd0031.svg)](https://angular.dev/)
+[![KRDS](https://img.shields.io/badge/KRDS-v1.1.0-256ef4.svg)](https://github.com/KRDS-uiux/krds-uiux)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-> 초기 개발 단계입니다. 아직 npm에 배포하지 않았습니다. KRDS 공식 분류의 컴포넌트를 모두 옮겼고(아래 [컴포넌트](#컴포넌트)), 스타일시트에는 KRDS 컴포넌트 CSS가 모두 들어 있습니다.
+</div>
+
+<hr />
+<div align="center">
+
+<a href="https://angular.krds.initializer.org/">문서</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="https://angular.krds.initializer.org/guide/getting-started">시작하기</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="https://angular.krds.initializer.org/components/">컴포넌트</a>
+
+</div>
+<hr />
+
+## KRDS Angular: 대한민국 정부 디자인 시스템을 Angular로
+
+[KRDS(대한민국 정부 디자인 시스템)](https://www.krds.go.kr/html/site/index.html)를 Angular + TypeScript로 구현한 컴포넌트 라이브러리입니다. 공공 웹서비스에서 반복되는 폼, 내비게이션, 레이아웃, 피드백 UI를 KRDS 원본과 같은 모습과 동작으로 제공합니다.
+
+- **KRDS 원본 그대로.** KRDS 원본 v1.1.0의 마크업·클래스·키보드 동작을 따르고, [KRDS Vue](https://github.com/Initializer-org/krds-vue)와 같은 스타일을 씁니다. [공식 컴포넌트 목록](https://www.krds.go.kr/html/site/component/component_summary.html)의 분류를 모두 옮겼습니다(스플래시 스크린은 각 플랫폼의 기본 기능 영역이라 제외).
+- **접근성 자동 검사.** 모든 컴포넌트 테스트와 문서 예제가 실제 브라우저에서 axe-core 접근성 검사를 실행하고, 위반이 있으면 CI가 실패합니다. 고대비 모드를 지원합니다.
+- **Angular 방식 그대로.** standalone 컴포넌트·디렉티브와 signal 입력으로 만들었고 zoneless로 동작합니다. 폼은 기본 입력 요소에 디렉티브를 붙이는 방식이라 `[(ngModel)]`, reactive forms, Signal Forms가 그대로 동작합니다.
+
+> 초기 개발 단계입니다. 아직 npm에 배포하지 않았습니다.
 
 ## 빠른 시작
 
@@ -30,41 +59,15 @@ import { KrdsButton } from '@krds.ui/angular'
 export class App {}
 ```
 
-Angular `^22.2.0`이 필요합니다.
+Angular `^22.2.0`이 필요합니다. 번들 예산, 작성 방식, 폼, 고대비 모드는 [시작하기](https://angular.krds.initializer.org/guide/getting-started)를 참고하세요.
 
-스타일시트는 KRDS 전체 CSS라 압축 전 약 620kB(전송 약 45kB)입니다. `ng new`의 기본 번들 예산(`initial` 경고 500kB)에서 경고가 나오면 `angular.json`의 `budgets`에서 `maximumWarning`을 `1mb`로 올리세요.
+## 접근성
 
-## 컴포넌트
+라이브러리 차원의 자동 검사는 KWCAG/WCAG 적합성 평가를 대체하지 않습니다. 서비스 전체의 접근성 준수는 사용처에서 별도로 검증해야 합니다.
 
-[KRDS 공식 컴포넌트 목록](https://www.krds.go.kr/html/site/component/component_summary.html)의 분류 단위로 옮깁니다. 분류와 순서는 [krds-vue 문서](https://krds.initializer.org/components/)와 같습니다.
+## 기여하기
 
-- [x] 액션: 링크 `a[krdsLink]`, 버튼 `button[krdsButton]`, 플로팅 버튼 `<krds-floating-button>`
-- [x] 선택: 라디오 버튼 `<krds-radio>`, 체크박스 `<krds-checkbox>`, 셀렉트 `select[krdsSelect]`, 태그 `<krds-tag>`·`a[krdsTag]`, 토글 스위치 `<krds-toggle-switch>`, 묶음 `[krdsCheckArea]`·`[krdsTagGroup]`
-- [x] 입력: 날짜 입력 필드 `<krds-date-input>`, 텍스트 영역 `textarea[krdsInput]`·글자 수 `<krds-textarea>`, 텍스트 입력 필드 `input[krdsInput]`, 파일 업로드 `<krds-file-upload>`, 폼 그룹 `<krds-form-group>` (부가 컴포넌트에서 앞당김)
-- [x] 피드백: 단계 표시기 `ol[krdsStepIndicator]`·`li[krdsStep]`, 스피너 `<krds-spinner>` (입력 필드 로딩은 폼 그룹 `loading`)
-- [x] 레이아웃 및 표현: 구조화 목록 `ul[krdsStructuredList]`, 긴급 공지 `<krds-critical-alerts>`, 디스클로저 `<krds-disclosure>`, 모달 `<krds-modal>`, 배지 `[krdsBadge]`, 아코디언 `[krdsAccordion]`·`<krds-accordion-item>`, 이미지 `img[krdsImage]`·`figure[krdsFigure]`, 캐러셀 `<krds-carousel>`·`li[krdsSlide]`, 탭 `<krds-tabs>`, 표 `<krds-table>`, 텍스트 목록 `[krdsTextList]`
-- [x] 탐색: 건너뛰기 링크 `[krdsSkipLink]`, 메인 메뉴 `<krds-main-menu>`(PC·모바일), 브레드크럼 `nav[krdsBreadcrumb]`, 사이드 메뉴 `nav[krdsSideNavigation]`, 콘텐츠 내 탐색 `<krds-in-page-navigation>`, 페이지네이션 `nav[krdsPagination]`, 새 창 링크 `a[krdsExternal]`
-- [x] 아이덴티티: 공식 배너 `[krdsMasthead]`, 운영기관 식별자 `[krdsIdentifier]`, 헤더 `header[krdsHeader]`, 푸터 `footer[krdsFooter]`
-- [x] 도움: 패널 `<krds-panel>`, 맥락적 도움말 `<krds-contextual-help>`, 코치마크 `<krds-coach-mark>`, 툴팁 `<krds-tooltip>`, 음성 지원 `button[krdsTts]`
-- [x] 설정: 언어 변경 `<krds-language-switcher>`, 화면 크기 조정 `<krds-resize>`, 드롭다운 `[krdsDropdown]`
-- [x] 콘텐츠: 접근 가능한 미디어 `figure[krdsMedia]`, 숨긴 콘텐츠 `class="sr-only"` (KRDS CSS 클래스라 디렉티브 없이 `[class.sr-only]="조건"`으로 씀)
-- [x] 모바일: 범위슬라이드 `<krds-range-slider>`, 수량 토글 `<krds-quantity-toggle>`, 토스트 `<krds-toast>`·`KrdsToastService`, 스낵바 `<krds-snackbar>`·`KrdsSnackbarService`, 탭바 `nav[krdsTabBar]` (스플래시 스크린은 krds-vue처럼 제공하지 않음: 각 플랫폼의 기본 기능 영역)
-- [x] 부가 컴포넌트: 레이아웃 `[krdsLayout]`, 폼 그룹 `<krds-form-group>`(입력 분류에서 추가). 아이콘과 버튼 묶음은 KRDS 클래스를 그대로 씀: `<i class="svg-icon ico-help" aria-hidden="true"></i>`, `<div class="btn-group">`
-
-폼 컴포넌트는 기본 입력 요소를 그대로 씁니다. 텍스트 입력 필드·텍스트 영역은 `krdsInput`, 셀렉트는 `krdsSelect`, 체크박스·라디오·토글 스위치 안의 input은 `krdsControl`로 표시하면, 감싸는 컴포넌트가 KRDS 마크업과 label·도움말 연결(`aria-describedby`, 오류 상태의 `aria-invalid`)을 맡습니다. 값과 검증은 기본 요소 그대로라 `[(ngModel)]`, reactive forms, Signal Forms(`[formField]`), `required` 같은 기본 속성이 그대로 동작합니다.
-
-```html
-<krds-form-group label="이메일" hint="이메일 형식이 올바르지 않습니다" state="error">
-  <input krdsInput type="email" [formField]="signupForm.email" />
-</krds-form-group>
-
-<krds-checkbox description="부가 설명">
-  <input type="checkbox" krdsControl [(ngModel)]="agree" />
-  개인정보 수집에 동의합니다
-</krds-checkbox>
-```
-
-## 개발
+**버그와 기능 요청**은 [이슈](https://github.com/Initializer-org/krds-angular/issues)로 남겨 주세요. 큰 변경은 이슈에서 먼저 논의해 주세요.
 
 ```bash
 pnpm install

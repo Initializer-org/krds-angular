@@ -20,7 +20,7 @@ hero:
 
 features:
   - title: 최신 Angular 문법
-    details: Angular 22의 signal 입력·출력, standalone 컴포넌트, zoneless 변경 감지로 만들었습니다. 버튼·링크처럼 기본 요소에 붙이는 디렉티브는 기본 동작을 그대로 씁니다.
+    details: Angular 20 이상의 signal 입력·출력, standalone 컴포넌트, zoneless 변경 감지로 만들었습니다. 버튼·링크처럼 기본 요소에 붙이는 디렉티브는 기본 동작을 그대로 씁니다.
   - title: 폼은 기본 입력 요소 그대로
     details: 입력 필드·체크박스·셀렉트는 기본 요소를 넣고 표시만 붙이므로 ngModel, reactive forms, Signal Forms가 그대로 동작합니다.
   - title: 접근성 자동 검사

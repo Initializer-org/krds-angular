@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/Initializer-org/krds-angular/compare/v0.1.0...v0.1.1) (2026-10-29)
+
+
+### Bug Fixes
+
+* npm 0.1.0이 Angular 22만 허용하던 문제 - 릴리스 워크플로가 publish를 건너뛰어 [#32](https://github.com/Initializer-org/krds-angular/issues/32)의 peerDependencies가 빠졌음 ([#35](https://github.com/Initializer-org/krds-angular/issues/35)) ([162eef8](https://github.com/Initializer-org/krds-angular/commit/162eef830546c1e9b6e9550fe80e0c09fc51ca04))
+
 ## 0.1.0 (2026-10-29)
 
 > npm의 0.1.0은 릴리스 워크플로보다 먼저 손으로 올린 빌드라 peerDependencies가 `^22.2.0`입니다. Angular 20·21 지원(#32)은 0.1.1부터 들어갑니다.

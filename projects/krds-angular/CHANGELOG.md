@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/Initializer-org/krds-angular/compare/v0.1.1...v0.1.2) (2026-10-31)
+
+
+### Bug Fixes
+
+* 달력의 이전·다음 달 날짜를 고를 수 없게 (공식 krds-react와 같게) ([#37](https://github.com/Initializer-org/krds-angular/issues/37)) ([f4a7296](https://github.com/Initializer-org/krds-angular/commit/f4a7296e01eea4d2ca795f8b84f6ebfbeaa18ffd))
+
 ## [0.1.1](https://github.com/Initializer-org/krds-angular/compare/v0.1.0...v0.1.1) (2026-10-29)
 
 

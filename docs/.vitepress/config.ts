@@ -8,11 +8,14 @@ import { pageDescription } from './pages.ts'
 import { documentationHead, documentationTitle } from './seo.ts'
 
 const root = resolve(import.meta.dirname, '../..')
-const { version } = JSON.parse(readFileSync(resolve(root, 'projects/krds-angular/package.json'), 'utf-8')) as { version: string }
+const { name: packageName, version } = JSON.parse(readFileSync(resolve(root, 'projects/krds-angular/package.json'), 'utf-8')) as {
+  name: string
+  version: string
+}
 
 const siteUrl = 'https://angular.krds.initializer.org'
 const siteDescription =
-  '대한민국 정부 디자인 시스템(KRDS)을 Angular로 구현한 컴포넌트 라이브러리 문서입니다. 공공 웹서비스를 위한 폼, 내비게이션, 레이아웃, 피드백 UI 예제와 API를 제공합니다.'
+  'Initializer Team의 @krds.ui/angular 문서입니다. KRDS 기준의 공공서비스 화면을 Angular로 구성하는 커뮤니티 라이브러리로, standalone 컴포넌트와 Angular 폼 연동을 제공합니다.'
 
 /**
  * 컴포넌트 문서의 '## API' 제목을 경계로 개요 / API 레퍼런스 탭 패널을 일반 HTML로 감싼다 (DocTabs는 탭 목록만 그림).
@@ -127,6 +130,7 @@ export default defineConfig({
         siteName: 'KRDS Angular',
         siteDescription,
         framework: 'Angular',
+        packageName,
         version,
         license: 'MIT',
         repository: 'https://github.com/Initializer-org/krds-angular',

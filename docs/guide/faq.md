@@ -11,9 +11,25 @@ KRDS Angular는 Initializer Team이 유지보수하는 `@krds.ui/angular`입니�
 
 아닙니다. 이 프로젝트는 [KRDS 공식 가이드](https://www.krds.go.kr/html/site/index.html)를 따르지만, Initializer Team이 별도로 유지보수합니다. 구현 소스와 변경 이력은 [krds-angular 저장소](https://github.com/Initializer-org/krds-angular)에서 확인할 수 있습니다.
 
+## krds-angular·krds-uiux와 어떤 차이가 있나요? {#package-names}
+
+이 문서의 Angular 라이브러리는 [`@krds.ui/angular`](https://www.npmjs.com/package/@krds.ui/angular)이며 설치 명령은 `npm install @krds.ui/angular`입니다. `Initializer-org/krds-angular`는 GitHub 저장소 이름이고 npm 설치 이름은 `@krds.ui/angular`입니다. [`krds-uiux`](https://github.com/KRDS-uiux/krds-uiux)는 KRDS 공식 HTML Component Kit으로, 이 Angular 컴포넌트·디렉티브 라이브러리와 별개의 패키지입니다.
+
+## Vue·React·Angular 중 어떤 패키지를 선택하나요? {#framework-packages}
+
+Initializer Team의 KRDS 라이브러리는 프레임워크별로 별도 배포됩니다. 프로젝트에 사용하는 프레임워크에 맞는 패키지를 선택하세요.
+
+| 프레임워크 | npm 패키지                                                           | 설치 명령                      | 문서                                                                       |
+| ---------- | -------------------------------------------------------------------- | ------------------------------ | -------------------------------------------------------------------------- |
+| Vue        | [`@krds.ui/vue`](https://www.npmjs.com/package/@krds.ui/vue)         | `npm install @krds.ui/vue`     | [KRDS Vue](https://krds.initializer.org/guide/getting-started)             |
+| React      | [`@krds.ui/react`](https://www.npmjs.com/package/@krds.ui/react)     | `npm install @krds.ui/react`   | [KRDS React](https://react.krds.initializer.org/guide/getting-started)     |
+| Angular    | [`@krds.ui/angular`](https://www.npmjs.com/package/@krds.ui/angular) | `npm install @krds.ui/angular` | [KRDS Angular](https://angular.krds.initializer.org/guide/getting-started) |
+
+세 패키지는 각각의 프레임워크 API를 사용합니다. 설치 이름과 import 경로도 선택한 패키지에 맞춰야 합니다.
+
 ## npm에서 설치할 수 있나요? 어떤 Angular 버전을 지원하나요? {#installation}
 
-[`@krds.ui/angular`](https://www.npmjs.com/package/@krds.ui/angular)은 npm에서 설치할 수 있습니다. `pnpm add @krds.ui/angular`를 실행하세요. `@angular/core`와 `@angular/common`의 지원 범위는 `^20.0.0 || ^21.0.0 || ^22.0.0`입니다. 설치와 스타일 설정은 [시작하기](/guide/getting-started)에 정리되어 있습니다.
+[`@krds.ui/angular`](https://www.npmjs.com/package/@krds.ui/angular)은 npm에서 설치할 수 있습니다. `npm install @krds.ui/angular` 또는 `pnpm add @krds.ui/angular`를 실행하세요. `@angular/core`와 `@angular/common`의 지원 범위는 `^20.0.0 || ^21.0.0 || ^22.0.0`입니다. 설치와 스타일 설정은 [시작하기](/guide/getting-started)에 정리되어 있습니다.
 
 ## standalone 컴포넌트와 zone.js 없는 앱에서 사용할 수 있나요? {#standalone}
 

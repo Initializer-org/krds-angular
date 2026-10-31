@@ -5,15 +5,29 @@ description: '@krds.ui/angular 설치, Angular 20·21·22 요구사항, 스타�
 
 # KRDS Angular 설치와 시작하기
 
-KRDS Angular는 [KRDS(대한민국 정부 디자인 시스템)](https://www.krds.go.kr/html/site/index.html)를 Angular로 구현한 컴포넌트 라이브러리입니다. [KRDS Vue](https://krds.initializer.org)와 같은 KRDS 스타일을 씁니다.
+KRDS Angular(`@krds.ui/angular`)는 [KRDS(대한민국 정부 디자인 시스템)](https://www.krds.go.kr/html/site/index.html)를 Angular로 구현한 컴포넌트 라이브러리입니다. [KRDS Vue](https://krds.initializer.org)와 같은 KRDS 스타일을 씁니다.
 
 Initializer Team이 유지보수하는 커뮤니티 라이브러리이며, 정부가 배포하는 공식 Angular 패키지는 아닙니다. npm의 [`@krds.ui/angular`](https://www.npmjs.com/package/@krds.ui/angular) 패키지로 설치합니다.
 
 ## 설치
 
-```bash
+설치할 npm 패키지는 Initializer Team의 [`@krds.ui/angular`](https://www.npmjs.com/package/@krds.ui/angular)입니다. GitHub 저장소 이름 `Initializer-org/krds-angular`와 구분해서 사용하세요. [원본과의 관계와 패키지 이름](/guide/faq#package-names)을 확인할 수 있습니다.
+
+::: code-group
+
+```sh [npm]
+npm install @krds.ui/angular
+```
+
+```sh [pnpm]
 pnpm add @krds.ui/angular
 ```
+
+```sh [yarn]
+yarn add @krds.ui/angular
+```
+
+:::
 
 ## 스타일
 

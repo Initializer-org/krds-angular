@@ -124,10 +124,40 @@ body:has(.krds-playground) {
   }
 }
 
-.krds-playground #krds-header .logo a {
-  background-image: url('/logo.svg') !important;
-  background-size: auto 100%;
-  background-position: left center;
+/* 심벌과 서비스 이름을 함께 표시하며 KRDS 기본 배경 로고는 사용하지 않는다. */
+.krds-playground #krds-header .logo {
+  flex-shrink: 0;
+}
+.krds-playground #krds-header .logo .pg-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2rem;
+  width: auto;
+  height: auto;
+  background: none !important;
+  color: inherit;
+  font-size: 2.8rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  font-weight: 700;
+}
+.krds-playground .pg-brand picture {
+  display: flex;
+  flex-shrink: 0;
+}
+.krds-playground .pg-brand img {
+  width: 4.8rem;
+  height: 4.8rem;
+}
+@media (max-width: 767px) {
+  .krds-playground #krds-header .logo .pg-brand {
+    gap: 0.8rem;
+    font-size: 2rem;
+  }
+  .krds-playground .pg-brand img {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
 }
 
 /* 라이브러리의 개별 컴포넌트를 한 페이지 레이아웃으로 조합 */
@@ -138,8 +168,13 @@ body:has(.krds-playground) {
   gap: 4.8rem;
   padding-top: 4rem;
 }
-.krds-playground .krds-side-navigation {
-  width: 100%;
+/* 기본 .in-between의 296px 메뉴 폭·우측 여백이 grid 열을 침범하지 않게 한다. */
+.krds-playground #container > .in-between > .krds-side-navigation {
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
 }
 @media (max-width: 1023px) {
   .krds-playground #container > .in-between {

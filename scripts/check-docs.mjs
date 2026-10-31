@@ -92,6 +92,22 @@ try {
     }
     if (path === '/playground') {
       try {
+        for (const width of [1920, 1440, 1024, 390]) {
+          await page.setViewportSize({ width, height: 1080 })
+          const layout = await page.evaluate(() => ({
+            menuRight: document.querySelector('.krds-side-navigation').getBoundingClientRect().right,
+            contentLeft: document.querySelector('.contents').getBoundingClientRect().left,
+            menuDisplay: getComputedStyle(document.querySelector('.krds-side-navigation')).display,
+            brandWidth: document.querySelector('.pg-brand span').getBoundingClientRect().width,
+            pageWidth: document.documentElement.scrollWidth
+          }))
+          assert.ok(layout.brandWidth > 50, `${width}px: 로고 이름이 숨겨짐`)
+          if (width >= 1024) assert.ok(layout.menuRight <= layout.contentLeft, `${width}px: LNB가 본문을 침범함`)
+          else assert.equal(layout.menuDisplay, 'none')
+          assert.ok(layout.pageWidth <= width, `${width}px: 페이지 가로 넘침`)
+        }
+        await page.setViewportSize({ width: 1200, height: 900 })
+
         await page.getByRole('button', { name: '예시 신청하기', exact: true }).click()
         await page.waitForFunction(() => document.activeElement?.id === 'pg-name')
         await page.getByText('이름을 입력해 주세요.', { exact: true }).waitFor({ state: 'visible' })

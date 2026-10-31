@@ -86,7 +86,7 @@ interface RecordRow {
         </div>
         <div krdsHeaderBranding>
           <h2 class="logo">
-            <a href="/playground"><span class="sr-only">KRDS Angular 예시 누리집</span></a>
+            <a class="pg-brand" href="/playground"><img src="/logo.svg" alt="" width="48" height="48" /><span>KRDS Angular</span></a>
           </h2>
           <div class="header-actions">
             <a href="/components/" class="btn-navi sch">컴포넌트 찾기</a

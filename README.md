@@ -21,11 +21,15 @@
 <a href="https://angular.krds.initializer.org/guide/getting-started">시작하기</a>
 <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
 <a href="https://angular.krds.initializer.org/components/">컴포넌트</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="https://www.npmjs.com/package/@krds.ui/angular">npm: @krds.ui/angular</a>
 
 </div>
 <hr />
 
 ## KRDS Angular: 대한민국 정부 디자인 시스템을 Angular로
+
+**KRDS Angular의 npm 패키지는 [`@krds.ui/angular`](https://www.npmjs.com/package/@krds.ui/angular)입니다.** [Initializer Team](https://github.com/Initializer-org)이 유지보수하는 커뮤니티 라이브러리이며, 정부가 배포하는 공식 패키지와 별도로 배포됩니다.
 
 Angular 프로젝트에서 민원 신청, 본인 인증, 처리 현황 같은 공공서비스 화면을 [KRDS(대한민국 정부 디자인 시스템)](https://www.krds.go.kr/html/site/index.html) 기준으로 구성할 수 있습니다. 폼·내비게이션·레이아웃을 조합하고, 기존 Angular 폼에 KRDS의 스타일과 키보드 동작을 적용하세요. 기본 입력 요소를 사용하므로 `ngModel`과 reactive forms의 데이터 연결·유효성 검사를 함께 쓸 수 있습니다.
 
@@ -38,8 +42,10 @@ Angular 프로젝트에서 민원 신청, 본인 인증, 처리 현황 같은 �
 ## 빠른 시작
 
 ```bash
-pnpm add @krds.ui/angular
+npm install @krds.ui/angular
 ```
+
+pnpm을 쓰면 `pnpm add @krds.ui/angular`로 설치합니다. `Initializer-org/krds-angular`는 GitHub 저장소 이름이며, 설치와 import에는 `@krds.ui/angular`를 사용합니다. [패키지 이름과 원본과의 관계](https://angular.krds.initializer.org/guide/faq#package-names)를 참고하세요.
 
 `angular.json`의 `styles`에 스타일시트를 추가합니다.
 

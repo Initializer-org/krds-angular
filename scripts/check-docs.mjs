@@ -4,6 +4,7 @@
  * 사용: pnpm docs:build && pnpm docs:test [경로 접두사...] (예: pnpm docs:test /components/select /frame/select)
  * 포트는 DOCS_TEST_PORT(기본 4173)
  */
+import assert from 'node:assert/strict'
 import { spawn } from 'node:child_process'
 import { globSync, readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
@@ -51,6 +52,7 @@ try {
     await new Promise(resolve => setTimeout(resolve, 100))
   }
   const page = await browser.newPage({ viewport: { width: 1200, height: 900 } })
+  page.setDefaultTimeout(10_000)
   let errors = []
   page.on('pageerror', error => errors.push(error.message))
   page.on('console', message => message.type() === 'error' && errors.push(message.text()))
@@ -74,7 +76,7 @@ try {
     )
     // 컴포넌트 문서는 예제 영역만, 예제 전용 화면(frame/)은 화면 전체를 검사한다. 예제 화면은 페이지 조각이라 랜드마크 규칙(region)은 뺀다
     const frame = path.startsWith('/frame/')
-    const context = frame ? 'body' : '.demo'
+    const context = frame || path === '/playground' ? 'body' : '.demo'
     if (await page.locator(context).count()) {
       await page.addScriptTag({ content: axeSource })
       const violations = await page.evaluate(
@@ -86,6 +88,39 @@ try {
       )
       for (const violation of violations) {
         errors.push(`${violation.id}: ${violation.help}\n    ${violation.nodes.map(node => node.target.join(' ')).join('\n    ')}`)
+      }
+    }
+    if (path === '/playground') {
+      try {
+        await page.getByRole('button', { name: '예시 신청하기', exact: true }).click()
+        await page.waitForFunction(() => document.activeElement?.id === 'pg-name')
+        await page.getByText('이름을 입력해 주세요.', { exact: true }).waitFor({ state: 'visible' })
+        await page.getByRole('textbox', { name: '이름 (필수)', exact: true }).fill('체험 사용자')
+        await page.getByRole('combobox', { name: '신청 유형 (필수)', exact: true }).selectOption('certificate')
+        await page.getByText('개인정보 수집·이용 동의 (필수)', { exact: true }).click()
+        await page.getByRole('button', { name: '예시 신청하기', exact: true }).click()
+        const dialog = page.getByRole('dialog')
+        await dialog.waitFor({ state: 'visible' })
+        assert.match(await dialog.innerText(), /체험 사용자님의 입력을 확인했습니다/)
+        await dialog.getByRole('button', { name: '닫기', exact: true }).first().click()
+        await dialog.waitFor({ state: 'hidden' })
+        await page.getByRole('button', { name: '초기화', exact: true }).click()
+        await page.waitForFunction(() => document.querySelector('#pg-name').value === '')
+        assert.equal(await page.locator('#pg-agree').isChecked(), false)
+        await page.getByRole('button', { name: '다음 단계', exact: true }).click()
+        await page.getByText('현재 단계: 2 / 4', { exact: true }).waitFor({ state: 'visible' })
+        await page.getByRole('link', { name: '2', exact: true }).click()
+        await page.getByText('여권 재발급', { exact: true }).waitFor({ state: 'visible' })
+        assert.equal(await page.getByText('주민등록표 등본 발급', { exact: true }).count(), 0)
+        await page.setViewportSize({ width: 390, height: 844 })
+        await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
+        await page.getByRole('button', { name: '전체메뉴', exact: true }).click()
+        await page.getByRole('button', { name: '전체메뉴 닫기', exact: true }).click()
+        await page.waitForFunction(() => document.querySelector('[aria-controls="mobile-nav"]').getAttribute('aria-expanded') === 'false')
+      } catch (error) {
+        errors.push(`플레이그라운드 동작: ${error.stack}`)
+      } finally {
+        await page.setViewportSize({ width: 1200, height: 900 })
       }
     }
     if (errors.length) problems.push(`${path}\n  ${errors.join('\n  ')}`)

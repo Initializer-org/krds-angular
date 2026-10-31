@@ -13,6 +13,7 @@ const demos = import.meta.glob<{ default: Type<unknown> }>('../../components/dem
 const el = ref<HTMLElement>()
 let app: ApplicationRef | undefined
 let unmounted = false
+const loaded = ref(false)
 
 onMounted(async () => {
   const load = demos[`../../components/demos/${props.name}.ts`]
@@ -21,6 +22,7 @@ onMounted(async () => {
   if (unmounted) return appRef.destroy()
   app = appRef
   app.attachView(createComponent(Demo, { environmentInjector: app.injector, hostElement: el.value! }).hostView)
+  loaded.value = true
 })
 onBeforeUnmount(() => {
   unmounted = true
@@ -29,5 +31,6 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+  <slot v-if="!loaded" />
   <div ref="el" class="angular-demo"></div>
 </template>

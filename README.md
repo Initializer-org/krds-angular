@@ -22,6 +22,8 @@
 <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
 <a href="https://angular.krds.initializer.org/components/">컴포넌트</a>
 <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="https://angular.krds.initializer.org/playground">플레이그라운드</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
 <a href="https://www.npmjs.com/package/@krds.ui/angular">npm: @krds.ui/angular</a>
 
 </div>

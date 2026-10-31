@@ -1,0 +1,152 @@
+/* 문서 테마와 분리된 실제 KRDS 예시 화면 */
+body:has(.krds-playground) {
+  height: auto;
+}
+.krds-playground .contents {
+  min-width: 0;
+}
+.krds-playground .pg-intro {
+  margin: 1.6rem 0 3.2rem;
+  font-size: 1.9rem;
+}
+.krds-playground .pg-title {
+  margin-top: 2.4rem;
+  font-size: 4rem;
+  font-weight: 700;
+}
+.krds-playground .pg-part {
+  margin-top: 6.4rem;
+  scroll-margin-top: 12rem;
+}
+.krds-playground .pg-part > h2 {
+  margin-bottom: 2.4rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 2px solid var(--krds-light-color-border-gray-dark);
+  font-size: 3.2rem;
+  font-weight: 700;
+}
+.krds-playground .pg-section {
+  margin-top: 3.2rem;
+}
+.krds-playground .pg-section > h3 {
+  margin-bottom: 1.2rem;
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+.krds-playground .pg-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+.krds-playground .pg-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.2rem;
+}
+.krds-playground .pg-hint {
+  margin: 1.6rem 0 2.4rem;
+}
+.krds-playground .pg-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  margin: 2.4rem 0;
+}
+.krds-playground .pg-links a {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+.krds-playground .pg-notice {
+  padding: 2.4rem;
+  border-radius: 1.2rem;
+  background: var(--krds-light-color-surface-secondary-subtler);
+}
+.krds-playground .pg-error {
+  color: var(--krds-light-color-text-danger);
+}
+.krds-playground .pg-table {
+  overflow-x: auto;
+  margin-bottom: 2.4rem;
+}
+.krds-playground .pg-table .krds-table-wrap {
+  max-width: 100%;
+}
+.krds-playground .pg-part:last-child {
+  margin-bottom: 8rem;
+}
+.krds-playground .pg-legend {
+  margin-bottom: 1.2rem;
+  font-weight: 700;
+}
+.krds-playground .pg-footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+.krds-playground .pg-footer-logo img {
+  width: 3.2rem;
+  height: 3.2rem;
+}
+.pg-fallback {
+  max-width: 100rem;
+  margin: 6rem auto;
+  padding: 2.4rem;
+}
+.pg-fallback h1 {
+  margin-bottom: 2.4rem;
+  font-size: 3.2rem;
+  font-weight: 700;
+}
+.pg-fallback p {
+  margin-bottom: 1.6rem;
+}
+[data-krds-mode='high-contrast'] .krds-playground .pg-part > h2 {
+  border-color: var(--krds-high-contrast-color-border-gray-dark);
+}
+[data-krds-mode='high-contrast'] .krds-playground .pg-notice {
+  background: var(--krds-high-contrast-color-surface-secondary-subtler);
+}
+[data-krds-mode='high-contrast'] .krds-playground .pg-error {
+  color: var(--krds-high-contrast-color-text-danger);
+}
+@media (max-width: 767px) {
+  .krds-playground .pg-title {
+    font-size: 3.2rem;
+  }
+  .krds-playground .pg-part > h2 {
+    font-size: 2.4rem;
+  }
+  .krds-playground .pg-part {
+    margin-top: 4rem;
+  }
+}
+
+.krds-playground #krds-header .logo a {
+  background-image: url('/logo.svg') !important;
+  background-size: auto 100%;
+  background-position: left center;
+}
+
+/* 라이브러리의 개별 컴포넌트를 한 페이지 레이아웃으로 조합 */
+.krds-playground #container > .in-between {
+  display: grid;
+  grid-template-columns: 24rem minmax(0, 1fr);
+  align-items: start;
+  gap: 4.8rem;
+  padding-top: 4rem;
+}
+.krds-playground .krds-side-navigation {
+  width: 100%;
+}
+@media (max-width: 1023px) {
+  .krds-playground #container > .in-between {
+    display: block;
+    padding-top: 2.4rem;
+  }
+  .krds-playground .krds-side-navigation {
+    display: none;
+  }
+}

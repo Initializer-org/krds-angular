@@ -93,7 +93,7 @@ for (const file of files) {
     const breadcrumb = graph.find(node => node['@type'] === 'BreadcrumbList')
     assert.equal(breadcrumb?.itemListElement.at(-1).item, url, `${file}: breadcrumb 현재 페이지 불일치`)
   }
-  if (file !== 'index.html' && file !== 'components/index.html') {
+  if (/^(guide|components)\//.test(file) && file !== 'components/index.html') {
     assert(
       graph.some(node => node['@type'] === 'TechArticle' && node.mainEntityOfPage?.['@id'] === document['@id']),
       `${file}: TechArticle 연결 누락`

@@ -9,10 +9,7 @@ const api = computed(() => data[props.name])
 <template>
   <template v-if="api">
     <p v-if="api.selector">
-      선택자 <code>{{ api.selector }}</code
-      ><template v-if="api.exportAs"
-        >, 템플릿 참조 <code>#ref="{{ api.exportAs }}"</code></template
-      >
+      선택자 <code>{{ api.selector }}</code><template v-if="api.exportAs">, 템플릿 참조 <code>#ref="{{ api.exportAs }}"</code></template>
     </p>
 
     <template v-if="api.selector || api.inputs.length">
@@ -28,17 +25,11 @@ const api = computed(() => data[props.name])
         </thead>
         <tbody>
           <tr v-for="input in api.inputs" :key="input.name">
-            <td>
-              <code>{{ input.twoWay ? `[(${input.name})]` : input.name }}</code
-              ><span v-if="input.required"> (필수)</span>
-            </td>
+            <td><code>{{ input.twoWay ? `[(${input.name})]` : input.name }}</code><span v-if="input.required"> (필수)</span></td>
             <td>
               <code>{{ input.type }}</code>
             </td>
-            <td>
-              <code v-if="input.default">{{ input.default }}</code
-              ><template v-else>-</template>
-            </td>
+            <td><code v-if="input.default">{{ input.default }}</code><template v-else>-</template></td>
             <td>{{ input.description }}</td>
           </tr>
         </tbody>

@@ -1,0 +1,62 @@
+version: 2
+updates:
+  # npm 패키지 업데이트
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '03:00'
+    open-pull-requests-limit: 10
+    groups:
+      development:
+        patterns:
+          - '@types/*'
+          - 'oxlint'
+          - 'oxfmt'
+          - 'vitest*'
+          - '@vitest/*'
+          - 'typescript'
+          - 'vite*'
+        update-types:
+          - 'minor'
+          - 'patch'
+      # 함께 맞춰야 하는 Angular 빌드 체인
+      angular:
+        patterns:
+          - '@angular/*'
+          - '@angular-devkit/*'
+          - 'ng-packagr'
+          - '@analogjs/*'
+        update-types:
+          - 'minor'
+          - 'patch'
+    ignore:
+      # Angular major는 ng update 마이그레이션과 peer 범위(20~22) 결정이 필요해 손으로 올린다
+      - dependency-name: '@angular/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@angular-devkit/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'ng-packagr'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'rxjs'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'vue'
+        update-types: ['version-update:semver-major']
+      # @angular/compiler-cli, ng-packagr가 typescript >=6.0 <6.1만 받아 minor도 Angular와 함께 올린다
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
+    commit-message:
+      prefix: 'chore'
+      include: 'scope'
+
+  # GitHub Actions 업데이트
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '03:00'
+    commit-message:
+      prefix: 'ci'
+      include: 'scope'

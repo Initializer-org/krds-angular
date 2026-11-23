@@ -35,16 +35,16 @@
     "@angular/cli": "^22.2.7",
     "@angular/compiler-cli": "^22.2.6",
     "@angular/forms": "^22.2.6",
-    "@vitest/browser-playwright": "^5.1.0",
+    "@vitest/browser-playwright": "^5.1.1",
     "axe-core": "^4.14.0",
     "ng-packagr": "^22.2.6",
-    "oxfmt": "^0.78.0",
-    "oxlint": "^1.93.0",
+    "oxfmt": "^0.79.0",
+    "oxlint": "^1.94.0",
     "playwright": "^1.65.1",
     "sass": "^1.108.2",
     "typescript": "~6.0.2",
     "vitepress": "2.0.0-alpha.21",
-    "vitest": "^5.1.0",
+    "vitest": "^5.1.1",
     "vue": "^3.5.45"
   }
 }

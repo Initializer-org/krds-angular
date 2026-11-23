@@ -36,7 +36,7 @@
     "@angular/compiler-cli": "^22.2.6",
     "@angular/forms": "^22.2.6",
     "@vitest/browser-playwright": "^5.1.0",
-    "axe-core": "^4.14.0",
+    "axe-core": "^4.14.1",
     "ng-packagr": "^22.2.6",
     "oxfmt": "^0.78.0",
     "oxlint": "^1.93.0",
